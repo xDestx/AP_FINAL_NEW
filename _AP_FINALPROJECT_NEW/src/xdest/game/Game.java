@@ -61,6 +61,7 @@ public class Game {
 	
 	public Game()
 	{
+		System.out.println("woah dude!");
 		w = WorldHandler.getWorld("Level1");
 		UIButton[] buttons = new UIButton[3];
 		buttons[0] = new UIButton("PLAY",
