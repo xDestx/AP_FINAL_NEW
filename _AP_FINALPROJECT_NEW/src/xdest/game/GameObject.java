@@ -8,7 +8,7 @@ package xdest.game;
 public interface GameObject {
 	
 	/**
-	 * Update the object
+	 * Update the object lol
 	 */
 	public abstract void update(Game g);
 	
