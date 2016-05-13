@@ -13,67 +13,85 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import xdest.game.Game;
+
 public class SoundMaster {
 
 	private static boolean init = false;
-	private static HashMap<String,Clip> sounds;
+	private static HashMap<String, Clip> sounds;
 
 	public static void init() {
 		if (init)
 			return;
+		Game.log("SoundMaster init...");
 		init = true;
-		sounds = new HashMap<String,Clip>();
-		String[] sound = { "/sounds/hitsound_real.wav", "/sounds/main_screen.wav", "/sounds/click_sound.wav"};
-		for (String name : sound) {
+		sounds = new HashMap<String, Clip>();
+		String[] sound = { "/sound/hitsound_real.wav", "/sound/main_screen.wav", "/sound/click_sound.wav",
+				"/sound/fight_music.wav" };
+		for (int i = 0; i < sound.length; i++) {
+			String x = sound[i];
 			try {
+				Game.log("Trying to load " + x + " ...");
 				AudioInputStream audioInputStream = AudioSystem
-						.getAudioInputStream(SoundMaster.class.getResourceAsStream(name));
+						.getAudioInputStream(SoundMaster.class.getResourceAsStream(x));
 				Clip c = AudioSystem.getClip();
 				c.open(audioInputStream);
-				sounds.put(name.substring(8),c);
-			} catch (UnsupportedAudioFileException e) {
+				sounds.put(x.substring(7), c);
+				Game.log("Loaded " + x);
+			} catch (UnsupportedAudioFileException er) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
+				er.printStackTrace();
+			} catch (IOException er) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (LineUnavailableException e) {
+				er.printStackTrace();
+			} catch (LineUnavailableException er) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				er.printStackTrace();
 			}
+
 		}
 
-		System.out.println("memes");
+	}
+	
+	public static boolean isPlaying(String path)
+	{
+		if (!init) {
+			SoundMaster.init();
+		}
+		if (sounds.containsKey(path))
+			return sounds.get(path).isActive();
+		else
+			return false;
 	}
 
 	public static void playSound(String path) {
 		if (!init) {
 			SoundMaster.init();
 		}
-		try {System.out.println("TOTAL ANNIHILTION");
+		try {
 			Clip c = sounds.get(path);
 			if (c.getFramePosition() > 0)
 				c.setFramePosition(0);
 			c.start();
-			System.out.println("WAAAHHHH");
-		} catch (Exception e)
-		{
+			Game.log("Playing sound " + path);
+		} catch (Exception e) {
+			Game.log("Failed to play " + path);
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void stopSound(String path) {
 		if (!init) {
 			SoundMaster.init();
 		}
-		try {System.out.println("TOTAL ANNIHILTION");
+		try {
 			Clip c = sounds.get(path);
 			c.stop();
 			if (c.getFramePosition() > 0)
 				c.setFramePosition(0);
-			System.out.println("WAAAHHHH");
-		} catch (Exception e)
-		{
+			Game.log("Stopping and resetting sound " + path);
+		} catch (Exception e) {
+			Game.log("Failed to stop " + path);
 			e.printStackTrace();
 		}
 	}

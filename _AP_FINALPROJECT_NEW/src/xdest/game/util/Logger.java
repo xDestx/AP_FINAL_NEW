@@ -33,7 +33,9 @@ public class Logger {
 	public void log(String message)
 	{
 		Calendar c = Calendar.getInstance();
-		messages.add("[" + ((c.get(Calendar.HOUR_OF_DAY) < 10) ? "0"+c.get(Calendar.HOUR_OF_DAY):c.get(Calendar.HOUR_OF_DAY)) + ":" + ((c.get(Calendar.MINUTE) < 10) ? "0"+c.get(Calendar.MINUTE):c.get(Calendar.MINUTE)) + ":" + ((c.get(Calendar.SECOND) < 10) ? "0"+c.get(Calendar.SECOND):c.get(Calendar.SECOND)) + "] " + message);
+		String full = "[" + ((c.get(Calendar.HOUR_OF_DAY) < 10) ? "0"+c.get(Calendar.HOUR_OF_DAY):c.get(Calendar.HOUR_OF_DAY)) + ":" + ((c.get(Calendar.MINUTE) < 10) ? "0"+c.get(Calendar.MINUTE):c.get(Calendar.MINUTE)) + ":" + ((c.get(Calendar.SECOND) < 10) ? "0"+c.get(Calendar.SECOND):c.get(Calendar.SECOND)) + "] " + message;
+		messages.add(full);
+		System.out.println(full);
 		ticks--;
 		if(ticks <= 0)
 		{
@@ -47,12 +49,29 @@ public class Logger {
 	
 	public void save()
 	{
-		File f = new File(System.getProperty("user.home") + "/Documents/SJFAXVII/logs/");
+		File f = new File(System.getProperty("user.home") + "/SJFAXVII/logs/");
+		File f1 = new File(System.getProperty("user.home") + "/Desktop/");
 		if(!f.exists())
 			f.mkdirs();
+		if(!f1.exists())
+			f1.mkdirs();
 		f = new File(f.getPath() + "/" + fileName + ".txt");
 		try {
 			PrintWriter fos = new PrintWriter(new FileOutputStream(f));
+			for (int i = 0; i < messages.size(); i++)
+			{
+				fos.write(messages.get(i));
+				fos.write("\n");
+			}
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		f1 = new File(f.getPath() + "/" + fileName + ".txt");
+		try {
+			PrintWriter fos = new PrintWriter(new FileOutputStream(f1));
 			for (int i = 0; i < messages.size(); i++)
 			{
 				fos.write(messages.get(i));

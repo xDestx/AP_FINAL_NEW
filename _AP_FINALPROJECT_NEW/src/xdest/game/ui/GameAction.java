@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import xdest.game.Game;
 import xdest.game.location.Location;
+import xdest.game.sound.SoundMaster;
 
 public enum GameAction {
 
@@ -30,6 +31,8 @@ public enum GameAction {
 			g.setName(1, s);
 			g.setName(2, s1);
 			g.setState(0);
+			SoundMaster.stopSound("main_screen.wav");
+			SoundMaster.playSound("fight_music.wav");
 		}
 	}
 }

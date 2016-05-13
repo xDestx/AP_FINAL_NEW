@@ -11,6 +11,7 @@ import xdest.game.entity.Entity;
 import xdest.game.entity.player.Player;
 import xdest.game.location.Location;
 import xdest.game.location.Velocity;
+import xdest.game.sound.SoundMaster;
 import xdest.game.ui.GameAction;
 import xdest.game.ui.Menu;
 import xdest.game.ui.Screen;
@@ -43,6 +44,7 @@ public class Game {
 	{
 		l = new Logger("AP FINAL PROJECT GAME",5);
 		Game.log("Starting...");
+		SoundMaster.init();
 		Game.log("Game fix branch test! :)");
 		g = new Game();
 		g.play();
@@ -64,6 +66,10 @@ public class Game {
 		if (state == 0)
 		{
 			init();
+		}
+		if (state == 1)
+		{
+			SoundMaster.playSound("main_screen.wav");
 		}
 		this.state = state;
 	}
@@ -110,6 +116,7 @@ public class Game {
 		f.setMinimumSize(f.getSize());
 		f.setMaximumSize(f.getSize());
 		f.setVisible(true);
+		SoundMaster.playSound("main_screen.wav");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		p1n = "P1";
 		p2n = "P2";
@@ -196,6 +203,8 @@ public class Game {
 		if (state == 0)
 		{
 			t.tick(this);
+			if(!SoundMaster.isPlaying("fight_music.wav"))
+				SoundMaster.playSound("fight_music.wav");
 			if (p1.isDead())
 			{
 				Game.log("Player 2 (" + p2.getName() + ") won. p2 health: " + p2.getHealth() + " p1  health: " + p1.getHealth());
@@ -207,6 +216,7 @@ public class Game {
 				p2.setVelocity(new Velocity(0,0));
 				p2.setLocation(new Location(((Screen.WIDTH - Player.WIDTH) / 2), ((Screen.HEIGHT - Player.HEIGHT) / 2)));
 				state = 3;
+				SoundMaster.stopSound("fight_music.wav");
 				Game.log("Switching state to 3");
 				Thread t = new Thread()
 				{
@@ -236,6 +246,7 @@ public class Game {
 				p2.setVelocity(new Velocity(0,0));
 				p1.setLocation(new Location(((Screen.WIDTH - Player.WIDTH) / 2), ((Screen.HEIGHT - Player.HEIGHT) / 2)));
 				state = 3;
+				SoundMaster.stopSound("fight_music.wav");
 				Game.log("Switching state to 3");
 				Thread t = new Thread()
 				{
@@ -258,7 +269,8 @@ public class Game {
 			}
 		} else if (state == 1)
 		{
-			
+			if(!SoundMaster.isPlaying("main_screen.wav"))
+				SoundMaster.playSound("main_screen.wav");
 		} else if (state == 3)
 		{
 			t.tick(this);
@@ -315,116 +327,121 @@ public class Game {
 		playing = false;
 	}
 
-	public void keyPressed(KeyEvent e)
-	{
-		if (state == 0)
-		{
-			if (e.getKeyCode() == KeyEvent.VK_D)
-			{
-				p1.getVelocity().addX(5);
-				p1.setFacing(Player.FACE_RIGHT);
-			} else if (e.getKeyCode() == KeyEvent.VK_A)
-			{
-				p1.getVelocity().addX(-5);
-				p1.setFacing(Player.FACE_LEFT);
-			} else if (e.getKeyCode() == KeyEvent.VK_S)
-			{
+	public void keyPressed(KeyEvent e) {
+		if (state == 0) {
+			if (e.getKeyCode() == KeyEvent.VK_D) {
+
+				// if((Math.abs(p1.getVelocity().getX()) < 5))
+				if (!p1.getRh()) {
+					p1.setRh(true);
+					p1.getVelocity().addX(5);
+					p1.setFacing(Player.FACE_RIGHT);
+				}
+			} else if (e.getKeyCode() == KeyEvent.VK_A) {
+
+				if (!p1.getLh()) {
+					p1.getVelocity().addX(-5);
+					p1.setFacing(Player.FACE_LEFT);
+					p1.setLh(true);
+				}
+			} else if (e.getKeyCode() == KeyEvent.VK_S) {
+
+				// if((Math.abs(p1.getVelocity().getX()) < 5))
 				p1.getVelocity().addY(5);
 				p1.setFacing(Player.FACE_DOWN);
-			} else if (e.getKeyCode() == KeyEvent.VK_W)
-			{
+			} else if (e.getKeyCode() == KeyEvent.VK_W) {
 				p1.setFacing(Player.FACE_UP);
-				if (p1.canJump())
-				{
+				if (p1.canJump()) {
 					p1.getVelocity().addY(-12);
 					p1.setCanJump(false);
 				}
 			}
-			if (e.getKeyCode() == KeyEvent.VK_L)
-			{
-				p2.getVelocity().addX(5);
-				p2.setFacing(Player.FACE_RIGHT);
-			} else if (e.getKeyCode() == KeyEvent.VK_J)
-			{
-				p2.getVelocity().addX(-5);
-				p2.setFacing(Player.FACE_LEFT);
-				//System.out.println(p2.getVelocity().toString());
-			} else if (e.getKeyCode() == KeyEvent.VK_K)
-			{
-				p2.getVelocity().addY(5);
+			if (e.getKeyCode() == KeyEvent.VK_L) {
+				if (!p2.getRh()) {
+					p2.getVelocity().addX(5);
+					p2.setRh(true);
+					p2.setFacing(Player.FACE_RIGHT);
+				}
+			} else if (e.getKeyCode() == KeyEvent.VK_J) {
+				if (!p2.getLh()) {
+					p2.getVelocity().addX(-5);
+					p2.setLh(true);
+					p2.setFacing(Player.FACE_LEFT);
+				}
+				// System.out.println(p2.getVelocity().toString());
+			} else if (e.getKeyCode() == KeyEvent.VK_K) {
+				if ((Math.abs(p2.getVelocity().getX()) < 5))
+					p2.getVelocity().addY(5);
 				p2.setFacing(Player.FACE_DOWN);
-			} else if (e.getKeyCode() == KeyEvent.VK_I)
-			{
+			} else if (e.getKeyCode() == KeyEvent.VK_I) {
 				p2.setFacing(Player.FACE_UP);
-				if (p2.canJump())
-				{
+				if (p2.canJump()) {
 					p2.getVelocity().addY(-12);
 					p2.setCanJump(false);
 				}
 			}
-			if (e.getKeyCode() == KeyEvent.VK_C)
-			{
+			if (e.getKeyCode() == KeyEvent.VK_C) {
 				hit(p1);
-			} else if (e.getKeyCode() == KeyEvent.VK_SPACE)
-			{
+			} else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 				hit(p2);
 			}
-		} else if (state == 1)
-		{
-			
+		} else if (state == 1) {
 		}
 	}
-	
-	private void hit(Player exempt)
-	{
-		for (Entity e : t.getEntities())
-		{
-			if (e instanceof Player)
-			{
-				Player x = (Player)e;
-				if (x.colliding(exempt.getHitBounds()))
-				{
+
+	private void hit(Player exempt) {
+		for (Entity e : t.getEntities()) {
+			if (e instanceof Player) {
+				Player x = (Player) e;
+				if (x.colliding(exempt.getHitBounds())) {
 					x.damage(exempt.getStats().getDamage());
 				}
 			}
 		}
 	}
-	
-	
-	public void keyReleased(KeyEvent e)
-	{
-		if (e.getKeyCode() == KeyEvent.VK_D)
-		{
-			if((Math.abs(p1.getVelocity().getX()) <= 5))
-				p1.getVelocity().addX(-5);
-		} else if (e.getKeyCode() == KeyEvent.VK_A)
-		{
-			if((Math.abs(p1.getVelocity().getX()) <= 5))
-				p1.getVelocity().addX(5);
-		} else if (e.getKeyCode() == KeyEvent.VK_S)
-		{
+
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_D) {
+			if ((Math.abs(p1.getVelocity().getX()) <= 5) && p1.getRh())
+				if (p1.getLh())
+					p1.getVelocity().setX(-5);
+				else
+					p1.getVelocity().setX(0);
+			p1.setRh(false);
+		} else if (e.getKeyCode() == KeyEvent.VK_A && p1.getLh()) {
+			if ((Math.abs(p1.getVelocity().getX()) <= 5))
+				if (p1.getRh())
+					p1.getVelocity().setX(5);
+				else
+					p1.getVelocity().setX(0);
+			p1.setLh(false);
+		} else if (e.getKeyCode() == KeyEvent.VK_S) {
 			p1.getVelocity().addY(-5);
-		} else if (e.getKeyCode() == KeyEvent.VK_W)
-		{
-			
+		} else if (e.getKeyCode() == KeyEvent.VK_W) {
+
 		}
-		if (e.getKeyCode() == KeyEvent.VK_L)
-		{
-			if((Math.abs(p2.getVelocity().getX()) <= 5))
-				p2.getVelocity().addX(-5);
-		} else if (e.getKeyCode() == KeyEvent.VK_J)
-		{
-			if((Math.abs(p2.getVelocity().getX()) <= 5))
-				p2.getVelocity().addX(5);
-		} else if (e.getKeyCode() == KeyEvent.VK_K)
-		{
+		if (e.getKeyCode() == KeyEvent.VK_L) {
+			if ((Math.abs(p2.getVelocity().getX()) <= 5) && p2.getRh())
+				if (p2.getLh())
+					p2.getVelocity().setX(-5);
+				else
+					p2.getVelocity().setX(0);
+			p2.setRh(false);
+		} else if (e.getKeyCode() == KeyEvent.VK_J && p2.getLh()) {
+			if ((Math.abs(p2.getVelocity().getX()) <= 5))
+				if (p2.getRh())
+					p2.getVelocity().setX(5);
+				else
+					p2.getVelocity().setX(0);
+			p2.setLh(false);
+		} else if (e.getKeyCode() == KeyEvent.VK_K) {
 			p2.getVelocity().addY(-5);
-		} else if (e.getKeyCode() == KeyEvent.VK_I)
-		{
-			
+		} else if (e.getKeyCode() == KeyEvent.VK_I) {
+
 		}
-		
+
 	}
+	
 	
 	public void setName(int p, String name)
 	{

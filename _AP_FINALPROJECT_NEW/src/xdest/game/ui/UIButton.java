@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 
 import xdest.game.Game;
 import xdest.game.location.Location;
+import xdest.game.sound.SoundMaster;
 import xdest.game.util.Renderable;
 
 public class UIButton implements Renderable{
@@ -126,6 +127,7 @@ public class UIButton implements Renderable{
 	
 	public void clicked(Game g)
 	{
+		SoundMaster.playSound("click_sound.wav");
 		GameAction.doAction(g,i);
 	}
 	
