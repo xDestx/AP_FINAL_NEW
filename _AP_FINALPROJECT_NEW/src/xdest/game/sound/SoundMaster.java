@@ -1,6 +1,7 @@
 package xdest.game.sound;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class SoundMaster {
 		init = true;
 		sounds = new HashMap<String, Clip>();
 		String[] sound = { "/sound/hitsound_real.wav", "/sound/main_screen.wav", "/sound/click_sound.wav",
-				"/sound/fight_music.wav" };
+				"/sound/fight_music.wav", "/sound/jump_sound.wav"};
 		for (int i = 0; i < sound.length; i++) {
 			String x = sound[i];
 			try {
