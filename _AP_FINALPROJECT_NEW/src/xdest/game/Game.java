@@ -353,6 +353,7 @@ public class Game {
 				p1.setFacing(Player.FACE_UP);
 				if (p1.canJump()) {
 					p1.getVelocity().addY(-12);
+					SoundMaster.playSound("jump_sound.wav");
 					p1.setCanJump(false);
 				}
 			}
@@ -377,6 +378,7 @@ public class Game {
 				p2.setFacing(Player.FACE_UP);
 				if (p2.canJump()) {
 					p2.getVelocity().addY(-12);
+					SoundMaster.playSound("jump_sound.wav");
 					p2.setCanJump(false);
 				}
 			}

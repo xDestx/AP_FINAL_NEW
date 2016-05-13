@@ -69,6 +69,10 @@ public class SoundMaster {
 		if (!init) {
 			SoundMaster.init();
 		}
+		if (SoundMaster.isPlaying(path))
+		{
+			sounds.get(path).setFramePosition(0);
+		}
 		try {
 			Clip c = sounds.get(path);
 			if (c.getFramePosition() > 0)

@@ -49,7 +49,7 @@ public class Logger {
 	
 	public void save()
 	{
-		File f = new File(System.getProperty("user.home") + "/SJFAXVII/logs/");
+		File f = new File(System.getProperty("user.home") + "/Desktop/SJFAXVII/logs/");
 		File f1 = new File(System.getProperty("user.home") + "/Desktop/");
 		if(!f.exists())
 			f.mkdirs();
@@ -69,7 +69,7 @@ public class Logger {
 			e.printStackTrace();
 		}
 		
-		f1 = new File(f.getPath() + "/" + fileName + ".txt");
+		f1 = new File(f1.getPath() + "/" + fileName + ".txt");
 		try {
 			PrintWriter fos = new PrintWriter(new FileOutputStream(f1));
 			for (int i = 0; i < messages.size(); i++)
