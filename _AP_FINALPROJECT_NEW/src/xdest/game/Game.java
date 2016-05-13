@@ -115,6 +115,7 @@ public class Game {
 		f.setSize(screen.getSize());
 		f.setMinimumSize(f.getSize());
 		f.setMaximumSize(f.getSize());
+		f.setResizable(false);
 		f.setVisible(true);
 		SoundMaster.playSound("main_screen.wav");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -469,6 +470,27 @@ public class Game {
 			}
 		}
 		
+	}
+	
+	public Player getPlayer1()
+	{
+		return p1;
+	}
+	
+	public Player getPlayer2()
+	{
+		return p2;
+	}
+	
+	public static int getHealthPosition(Player p)
+	{
+		if (p.equals(Game.getCurrentGame().getPlayer1()))
+		{
+			return 10;
+		} else
+		{
+			return 310;
+		}
 	}
 	
 	public World getWorld()

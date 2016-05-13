@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -18,6 +19,7 @@ import xdest.game.location.Location;
 import xdest.game.location.Velocity;
 import xdest.game.sound.SoundMaster;
 import xdest.game.ui.DamageNumber;
+import xdest.game.ui.Screen;
 import xdest.game.util.ImageLoader;
 import xdest.game.vis.Animation;
 import xdest.game.vis.HitAnimation;
@@ -499,6 +501,7 @@ public class Player extends Entity implements Collidable {
 	private void drawCharacter(Graphics g) {
 		g.drawImage(getImage(), (int) this.getLocation().getX() + xoff, (int) this.getLocation().getY() + yoff, null);
 	}
+	
 
 	private void drawHealthBar(Graphics g) {
 		g.setColor(Color.RED);
@@ -510,6 +513,55 @@ public class Player extends Entity implements Collidable {
 			g.setColor(Color.RED);
 			hurtTick--;
 		}
+		/*
+		 * Static
+		 */
+
+		//Green bar
+		g.fillRect(Game.getHealthPosition(this), 10,
+				(int) (((int) hp / stats.getMaxHp()) * 280), 20);
+		if (hurtTick <= 0) {
+			g.setColor(Color.BLACK);
+		} else {
+			g.setColor(Color.white);
+		}
+		g.setFont(new Font("Arial", Font.BOLD, 14));
+
+		g.drawImage(hb, Game.getHealthPosition(this), 10, (int) (280 + 2), 22, null);
+		//Health in string form
+		g.drawString((int) hp + " / " + (int) stats.getMaxHp(),Game.getHealthPosition(this) + 10, 26);
+		//Health overlay
+		
+		//Name
+		g.setFont(new Font("Impact", 0, 20));
+		String x = getName();
+		int l = x.length();
+		if (hurtTick <= 0)
+		{
+			g.setColor(Color.white);
+		} else
+		{
+			g.setColor(Color.black);
+		}
+		g.fillRect(Game.getHealthPosition(this), 30, 280, 22);
+		g.setColor(Color.cyan);
+		g.drawRect(Game.getHealthPosition(this), 30, 280, 22);
+		if (hurtTick <= 0)
+		{
+			g.setColor(Color.black);
+		} else
+		{
+			g.setColor(Color.white);
+		}
+		for (int i = 0; i < l; i++)
+		{
+			g.drawString(""+x.charAt(i), Game.getHealthPosition(this) + ((280 / (l + 1)) * (i + 1)), 48);
+		}
+		//g.drawString(getName(), Game.getHealthPosition(this) + 100, 44);
+		
+		////////////////////////////
+		
+		/* Dynamic
 		g.fillRect((int) getLocation().getX() + 1, (int) getLocation().getY() - 12,
 				(int) (((int) hp / stats.getMaxHp()) * 100), 10);
 		if (hurtTick <= 0) {
@@ -521,6 +573,7 @@ public class Player extends Entity implements Collidable {
 		g.drawString((int) hp + " / " + (int) stats.getMaxHp(), (int) getLocation().getX() + 3,
 				(int) getLocation().getY() - 4);
 		g.drawImage(hb, (int) getLocation().getX(), (int) getLocation().getY() - 14, (int) (100 + 2), 12, null);
+		*/
 		g.setColor(Color.black);
 	}
 
