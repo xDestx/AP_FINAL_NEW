@@ -17,7 +17,7 @@ public enum GameAction {
 	{
 		if (i == HELP)
 		{
-			JOptionPane.showMessageDialog(null, "Player 1 Moves with ASDW, Player 2 moves with JKLI\nPlayer 1 uses E to attack, Player 2 uses SPACE to attack\nYou attack the direction you are facing.");
+			JOptionPane.showMessageDialog(null, "Player 1 Moves with ASDW, Player 2 moves with JKLI\nPlayer 1 uses C to attack, Player 2 uses SPACE to attack\nYou attack the direction you are facing (The red box).");
 		}
 		if (i == QUIT)
 		{
