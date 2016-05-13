@@ -18,6 +18,7 @@ import xdest.game.ui.Text;
 import xdest.game.ui.UIButton;
 import xdest.game.util.ImageLoader;
 import xdest.game.util.KeyController;
+import xdest.game.util.Logger;
 import xdest.game.util.MouseWatcher;
 import xdest.game.world.World;
 import xdest.game.world.WorldHandler;
@@ -34,16 +35,23 @@ public class Game {
 	private JFrame f;
 	private Player p1,p2;
 	private String p1n, p2n;
+	private static Logger l;
 	public static int GRAVITY = 9;
 	//0 = Menu, 1 = Game
 	
 	public static void main(String[] args)
 	{
-		System.out.println("Starting...");
-		System.out.println("Game fix branch test! :)");
+		l = new Logger("AP FINAL PROJECT GAME",5);
+		Game.log("Starting...");
+		Game.log("Game fix branch test! :)");
 		g = new Game();
 		g.play();
 		
+	}
+	
+	public static void log(String message)
+	{
+		l.log(message);
 	}
 	
 	public static Game getCurrentGame()
@@ -62,7 +70,6 @@ public class Game {
 	
 	public Game()
 	{
-		System.out.println("woah dude!");
 		w = WorldHandler.getWorld("Level1");
 		UIButton[] buttons = new UIButton[3];
 		buttons[0] = new UIButton("PLAY",
@@ -89,7 +96,7 @@ public class Game {
 						Screen.HEIGHT / 8),
 				Color.DARK_GRAY, ImageLoader.loadImage("/images/dbutton.png"),
 				GameAction.QUIT);
-		
+		Game.log("UI Buttons built!");
 		m = new Menu("Super Japan Fighting Adventure XVII", buttons, ImageLoader.loadImage("/images/menubg.png"));
 		screen = new Screen(this);
 		screen.addKeyListener(new KeyController(this));
@@ -107,10 +114,12 @@ public class Game {
 		p1n = "P1";
 		p2n = "P2";
 		state = 1;
+		Game.log("Menu and other utilities built!");
 	}
 	
 	private void init()
 	{
+		Game.log("Initializing!");
 		screen.requestFocus();
 		t = new Ticker();
 		p1 = new Player(p1n);
@@ -125,6 +134,7 @@ public class Game {
 		this.createObject(w);
 		this.createObject(p1);
 		this.createObject(p2);
+		Game.log("Init complete");
 	}
 	
 	public void play()
@@ -155,14 +165,25 @@ public class Game {
 			f++;
 			if (s >= 1000000000)
 			{
-				System.out.println("Ticks: " + k + " | Fps: " + f);
+				if ((k != 100 && k != 101) || (f < 200))
+				{
+					Game.log("Ticks: " + k + " | Fps: " + f);
+					t.log();
+				}
 				f = 0;
 				s = 0;
 				k = 0;
 			}
 			
 		}
+		Game.log("Quitting...");
+		Game.getLogger().save();
 		System.exit(0);
+	}
+	
+	public static Logger getLogger()
+	{
+		return Game.l;
 	}
 	
 	public Menu getMenu()
@@ -177,6 +198,7 @@ public class Game {
 			t.tick(this);
 			if (p1.isDead())
 			{
+				Game.log("Player 2 (" + p2.getName() + ") won. p2 health: " + p2.getHealth() + " p1  health: " + p1.getHealth());
 				this.createObject(new Text("The winner is " + p2.getName() + "!", new Location(0, Screen.HEIGHT / 2), new Color(255,0,0)));
 				p1.setVisible(false);
 				p1.setVelocity(new Velocity(0,0));
@@ -185,6 +207,7 @@ public class Game {
 				p2.setVelocity(new Velocity(0,0));
 				p2.setLocation(new Location(((Screen.WIDTH - Player.WIDTH) / 2), ((Screen.HEIGHT - Player.HEIGHT) / 2)));
 				state = 3;
+				Game.log("Switching state to 3");
 				Thread t = new Thread()
 				{
 					@Override
@@ -197,12 +220,14 @@ public class Game {
 						{
 							e.printStackTrace();
 						}
+						Game.log("Switching state to 1");
 						Game.getCurrentGame().setState(1);
 					}
 				};
 				t.start();
 			} else if (p2.isDead())
 			{
+				Game.log("Player 1 (" + p1.getName() + ") won. p2 health: " + p2.getHealth() + " p1  health: " + p1.getHealth());
 				p2.setVisible(false);
 				this.createObject(new Text("The winner is " + p1.getName() + "!", new Location(0, Screen.HEIGHT / 2), new Color(255,0,0)));
 				p1.setVelocity(new Velocity(0,0));
@@ -211,6 +236,7 @@ public class Game {
 				p2.setVelocity(new Velocity(0,0));
 				p1.setLocation(new Location(((Screen.WIDTH - Player.WIDTH) / 2), ((Screen.HEIGHT - Player.HEIGHT) / 2)));
 				state = 3;
+				Game.log("Switching state to 3");
 				Thread t = new Thread()
 				{
 					@Override
@@ -223,6 +249,8 @@ public class Game {
 						{
 							e.printStackTrace();
 						}
+
+						Game.log("Switching state to 1");
 						Game.getCurrentGame().setState(1);
 					}
 				};

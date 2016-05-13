@@ -49,6 +49,7 @@ public class Player extends Entity implements Collidable {
 	 */
 	public Player(String name) {
 		super(name, new Location(), ImageLoader.loadImage("/images/defaultplayer.png"), new Rectangle(0,0,Player.WIDTH,Player.HEIGHT));
+		Game.log("Player created with name " + name);
 		hb = ImageLoader.loadImage("/images/healthbar.png");
 		stats = new Stats();
 		effects = new Stack<Effect>();
@@ -67,6 +68,7 @@ public class Player extends Entity implements Collidable {
 	
 	public Player(String name, String path) {
 		super(name, new Location(), ImageLoader.loadImage(path), new Rectangle(0,0,Player.WIDTH,Player.HEIGHT));
+		Game.log("Player created with name " + name + " and path (user icon) " + path);
 		stats = new Stats();
 		hb = ImageLoader.loadImage("/images/healthbar.png");
 		effects = new Stack<Effect>();
@@ -143,6 +145,7 @@ public class Player extends Entity implements Collidable {
 	public void addEffect(Effect e)
 	{
 		effects.add(e);
+		Game.log("Effect " + e.toString() + " added to " + getName());
 	}
 	
 	
@@ -153,6 +156,7 @@ public class Player extends Entity implements Collidable {
 	public void removeEffect(Effect e)
 	{
 		effects.remove(e);
+		Game.log("Effect " + e.toString() + " removed from " + getName());
 	}
 	
 	
@@ -164,6 +168,7 @@ public class Player extends Entity implements Collidable {
 	{
 		Stack<Effect> s = (Stack<Effect>)effects;
 		Effect e = s.get(i);
+		Game.log("Effect " + e.toString() + " removed from " + getName());
 		e.end();
 		effects.remove(i);
 	}
@@ -175,6 +180,7 @@ public class Player extends Entity implements Collidable {
 			e.end();
 		}
 		effects.clear();
+		Game.log("Effects cleared on " + getName());
 	}
 	
 	/**
@@ -193,7 +199,7 @@ public class Player extends Entity implements Collidable {
 	{
 		this.hp-=d;
 		addDn(new DamageNumber(d, (int)getLocation().getX() + 40 + (int)(Math.random() * 100), (int)getLocation().getY() - 40 - (int)(Math.random() * 30)));
-		//System.out.println("Ouch, bad effect! -" + d + "hp !!! - total:" + hp); 
+		Game.log(getName() + " effect damage for " + d);
 	}
 	
 	/**
@@ -219,6 +225,7 @@ public class Player extends Entity implements Collidable {
 		d = td;
 		this.hp-=d;
 		addDn(new DamageNumber(d, (int)getLocation().getX() + 40 + (int)(Math.random() * 100), (int)getLocation().getY() - 40 - (int)(Math.random() * 30)));
+		Game.log("Physical damage on " + getName() + " value: " + d);
 		if (Math.random() * 100 > 75)
 		{
 			this.addEffect(new HealthDrain(this, (int)(10 * Game.TICK), 10, (int)(5 * Game.TICK)));
@@ -233,7 +240,7 @@ public class Player extends Entity implements Collidable {
 	public void setHealth(double h)
 	{
 		this.hp = h;
-		
+		Game.log("Player " + getName() + " health set to " + h); 
 	//	System.out.println("Health set: " + h +"!");
 	}
 	
@@ -244,6 +251,7 @@ public class Player extends Entity implements Collidable {
 	public void effectHeal(double h)
 	{
 		this.hp+=h;
+		Game.log("Player " + getName() + " healed " + h);
 	//	System.out.println("Wowie! Healed for " + h + "hp! total: " + hp);
 	}
 

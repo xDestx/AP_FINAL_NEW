@@ -75,6 +75,16 @@ public class Ticker {
 		return x;
 	}
 	
+	public void log()
+	{
+		String s = "Object count: " + o.size() + "\nObjects:\n";
+		for (GameObject ob : o)
+		{
+			s+= ob.toString() + "\n";
+		}
+		Game.log(s);
+	}
+	
 	/**
 	 * Add ticked game object
 	 * @param g - Game object
