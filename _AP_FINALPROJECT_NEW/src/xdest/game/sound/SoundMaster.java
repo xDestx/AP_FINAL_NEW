@@ -13,6 +13,10 @@ import javax.sound.sampled.Control;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 import xdest.game.Game;
 
@@ -29,6 +33,20 @@ public class SoundMaster {
 		sounds = new HashMap<String, Clip>();
 		String[] sound = { "/sound/hitsound_real.wav", "/sound/main_screen.wav", "/sound/click_sound.wav",
 				"/sound/fight_music.wav", "/sound/jump_sound.wav"};
+
+		JFrame f = new JFrame("Meme hack");
+		JPanel p = new JPanel();
+		JLabel l = new JLabel("Downloading memes...");
+		JProgressBar jpb = new JProgressBar(0,sound.length);
+		p.add(l);
+		p.add(jpb);
+		f.add(p);
+		f.setSize(400, 400);
+		f.setResizable(false);
+		f.setVisible(true);
+		jpb.setString(""+((double)jpb.getValue()/(double)sound.length));
+		jpb.setStringPainted(true);
+		int currentLoaded = 0;
 		for (int i = 0; i < sound.length; i++) {
 			String x = sound[i];
 			try {
@@ -39,18 +57,19 @@ public class SoundMaster {
 				c.open(audioInputStream);
 				sounds.put(x.substring(7), c);
 				Game.log("Loaded " + x);
+				currentLoaded++;
+				jpb.setValue(currentLoaded);
+				jpb.setString(""+((double)currentLoaded/(double)sound.length));
 			} catch (UnsupportedAudioFileException er) {
-				// TODO Auto-generated catch block
 				er.printStackTrace();
 			} catch (IOException er) {
-				// TODO Auto-generated catch block
 				er.printStackTrace();
 			} catch (LineUnavailableException er) {
-				// TODO Auto-generated catch block
 				er.printStackTrace();
 			}
 
 		}
+		f.setVisible(false);
 
 	}
 	
