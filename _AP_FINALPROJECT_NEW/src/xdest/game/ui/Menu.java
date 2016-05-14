@@ -40,6 +40,7 @@ public class Menu extends MouseAdapter implements Renderable {
 			addedButton[i] = buttons[i];
 		}
 		addedButton[addedButton.length-1] = b;
+		buttons = addedButton;
 	}
 	
 	private void drawBg(Graphics g)

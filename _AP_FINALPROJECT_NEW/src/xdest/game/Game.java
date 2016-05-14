@@ -106,6 +106,14 @@ public class Game {
 				GameAction.QUIT);
 		Game.log("UI Buttons built!");
 		m = new Menu("Super Japan Fighting Adventure XVII", buttons, ImageLoader.loadImage("/images/menubg.png"));
+		m.addFloatingButton(new UIButton(" ",
+				new Rectangle(
+						(Screen.WIDTH / 2) - 25,
+						Screen.HEIGHT - 125,
+						50,
+						50),
+				Color.cyan, ImageLoader.loadImage("/images/muteButton.png"),
+				GameAction.MUTE));
 		screen = new Screen(this);
 		screen.addKeyListener(new KeyController(this));
 		t = new Ticker();
