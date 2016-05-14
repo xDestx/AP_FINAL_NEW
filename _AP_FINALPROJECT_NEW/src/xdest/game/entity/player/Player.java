@@ -519,13 +519,26 @@ public class Player extends Entity implements Collidable {
 			g.setColor(Color.RED);
 			hurtTick--;
 		}
+		boolean overHealed = (getHealth() - getStats().getMaxHp() > 1);
+		if(overHealed)
+		{
+			//Overhealed
+			g.setColor(Color.yellow);
+		}
 		/*
 		 * Static
 		 */
 
 		//Green bar
-		g.fillRect(Game.getHealthPosition(this), 10,
+		if(!overHealed)
+		{
+			g.fillRect(Game.getHealthPosition(this), 10,
 				(int) (((int) hp / stats.getMaxHp()) * 280), 20);
+		} else
+		{
+			g.fillRect(Game.getHealthPosition(this), 10,
+					(int) (((int) stats.getMaxHp() / stats.getMaxHp()) * 280), 20);
+		}
 		if (hurtTick <= 0) {
 			g.setColor(Color.BLACK);
 		} else {
