@@ -129,6 +129,11 @@ public class SoundMaster {
 		init = false;
 		for (String s : sounds.keySet())
 		{
+			if (sounds.get(s).isActive())
+			{
+				sounds.get(s).stop();
+				sounds.get(s).setFramePosition(0);
+			}
 			sounds.get(s).drain();
 			sounds.get(s).close();
 		}

@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import xdest.game.effect.HealthDrain;
 import xdest.game.entity.Entity;
@@ -393,7 +394,8 @@ public class Game {
 				Game.log(p1.getVelocity().toString() + " p1");
 				Game.log(p2.getVelocity().toString() + " p2");
 				Game.getLogger().save();
-				SoundMaster.close();
+			//	SoundMaster.close();
+				Game.getCurrentGame().quit();
 				System.exit(0);
 			}
 		} else if (state == 1) {
