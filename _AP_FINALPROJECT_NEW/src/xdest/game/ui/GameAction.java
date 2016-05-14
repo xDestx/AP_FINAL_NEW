@@ -10,7 +10,7 @@ import xdest.game.sound.SoundMaster;
 
 public enum GameAction {
 
-	QUIT,START,HELP,SELECT_LEVEL;
+	QUIT,START,HELP,SELECT_LEVEL,MUTE;
 
 	
 	public static void doAction(Game g,GameAction i)
@@ -42,5 +42,7 @@ public enum GameAction {
 			SoundMaster.stopSound("main_screen.wav");
 			SoundMaster.playSound("fight_music.wav");
 		}
+		if (i == MUTE)
+			SoundMaster.mutePressed();
 	}
 }

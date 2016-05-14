@@ -24,7 +24,8 @@ public class SoundMaster {
 
 	private static boolean init = false;
 	private static HashMap<String, Clip> sounds;
-
+	private static boolean muted = false;
+	
 	public static void init() {
 		if (init)
 			return;
@@ -78,6 +79,8 @@ public class SoundMaster {
 		if (!init) {
 			SoundMaster.init();
 		}
+		if(muted)
+			return false;
 		if (sounds.containsKey(path))
 			return sounds.get(path).isActive();
 		else
@@ -88,6 +91,8 @@ public class SoundMaster {
 		if (!init) {
 			SoundMaster.init();
 		}
+		if(muted)
+			return;
 		if (SoundMaster.isPlaying(path))
 		{
 			sounds.get(path).setFramePosition(0);
@@ -127,6 +132,17 @@ public class SoundMaster {
 	public static void close()
 	{
 		init = false;
+		stopAllSounds();
+		for (String s : sounds.keySet())
+		{
+			sounds.get(s).drain();
+			sounds.get(s).close();
+		}
+		sounds.clear();
+	}
+	
+	public static void stopAllSounds()
+	{
 		for (String s : sounds.keySet())
 		{
 			if (sounds.get(s).isActive())
@@ -134,10 +150,14 @@ public class SoundMaster {
 				sounds.get(s).stop();
 				sounds.get(s).setFramePosition(0);
 			}
-			sounds.get(s).drain();
-			sounds.get(s).close();
 		}
-		sounds.clear();
+	}
+	
+	public static void mutePressed()
+	{
+		muted = !muted;
+		if(muted)
+			stopAllSounds();
 	}
 
 }
