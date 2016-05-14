@@ -393,6 +393,10 @@ public class Game {
 			{
 				Game.log(p1.getVelocity().toString() + " p1");
 				Game.log(p2.getVelocity().toString() + " p2");
+				Game.log(p1.getRh() + "RH p1");
+				Game.log(p1.getLh() + "LH p1");
+				Game.log(p2.getRh() + "RH p2");
+				Game.log(p2.getLh() + "LH p2");
 				Game.getLogger().save();
 			//	SoundMaster.close();
 				Game.getCurrentGame().quit();
