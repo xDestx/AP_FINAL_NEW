@@ -28,6 +28,14 @@ public enum GameAction {
 		{
 			String s = JOptionPane.showInputDialog("Enter Player 1's name");
 			String s1 = JOptionPane.showInputDialog("Enter Player 2's name");
+			if(s.length() == 0)
+			{
+				s = "1";
+			}
+			if(s1.length() == 0)
+			{
+				s1 = "2";
+			}
 			g.setName(1, s);
 			g.setName(2, s1);
 			g.setState(0);
