@@ -31,9 +31,7 @@ public abstract class Item extends Entity {
 	}
 
 	@Override
-	public void update(Game g) {
-		// Do nothing! Sike!
-	}
+	public abstract void update(Game g);
 
 	@Override
 	public void render(Graphics g) {
