@@ -32,6 +32,16 @@ public class Menu extends MouseAdapter implements Renderable {
 		drawOptions(g);
 	}
 	
+	public void addFloatingButton(UIButton b)
+	{
+		UIButton[] addedButton = new UIButton[buttons.length+1];
+		for (int i = 0; i < buttons.length; i++)
+		{
+			addedButton[i] = buttons[i];
+		}
+		addedButton[addedButton.length-1] = b;
+	}
+	
 	private void drawBg(Graphics g)
 	{
 		g.setColor(Color.PINK);
