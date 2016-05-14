@@ -25,6 +25,7 @@ public class ItemMaster implements GameObject, Renderable {
 		//Create all items
 		itemNames = new ArrayList<String>();
 		itemNames.add("heal");
+		itemNames.add("regen");
 	}
 
 	@Override

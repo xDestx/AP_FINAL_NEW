@@ -47,8 +47,11 @@ public abstract class Item extends Entity {
 	
 	public static Item create(String name, Location l)
 	{
+		Rectangle bound = new Rectangle((int)l.getX(), (int)l.getY(), 50, 50);
 		if (name.equalsIgnoreCase("heal"))
-			return new HealItem(new Rectangle((int)l.getX(), (int)l.getY(), 50, 50));
+			return new HealItem(bound);
+		if (name.equalsIgnoreCase("regen"))
+			return new RegenItem(bound);
 		return null;
 	}
 
