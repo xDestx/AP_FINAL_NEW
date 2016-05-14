@@ -388,6 +388,14 @@ public class Game {
 			} else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 				hit(p2);
 			}
+			if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+			{
+				Game.log(p1.getVelocity().toString() + " p1");
+				Game.log(p2.getVelocity().toString() + " p2");
+				Game.getLogger().save();
+				SoundMaster.close();
+				System.exit(0);
+			}
 		} else if (state == 1) {
 		}
 	}

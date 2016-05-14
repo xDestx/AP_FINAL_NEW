@@ -91,12 +91,16 @@ public class SoundMaster {
 		if (SoundMaster.isPlaying(path))
 		{
 			sounds.get(path).setFramePosition(0);
+			stopSound(path);
 		}
 		try {
 			Clip c = sounds.get(path);
 			if (c.getFramePosition() > 0)
 				c.setFramePosition(0);
-			c.start();
+			do
+			{
+				c.start();
+			} while (!c.isActive());
 			Game.log("Playing sound " + path);
 		} catch (Exception e) {
 			Game.log("Failed to play " + path);
@@ -118,6 +122,17 @@ public class SoundMaster {
 			Game.log("Failed to stop " + path);
 			e.printStackTrace();
 		}
+	}
+	
+	public static void close()
+	{
+		init = false;
+		for (String s : sounds.keySet())
+		{
+			sounds.get(s).drain();
+			sounds.get(s).close();
+		}
+		sounds.clear();
 	}
 
 }
