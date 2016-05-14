@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import xdest.game.effect.HealthDrain;
 import xdest.game.entity.Entity;
 import xdest.game.entity.item.HealItem;
+import xdest.game.entity.item.ItemMaster;
 import xdest.game.entity.player.Player;
 import xdest.game.location.Location;
 import xdest.game.location.Velocity;
@@ -40,6 +41,7 @@ public class Game {
 	private String p1n, p2n;
 	private static Logger l;
 	public static int GRAVITY = 9;
+	public static int MENU = 1, FINISHED = 3, FIGHT = 0;
 	//0 = Menu, 1 = Game
 	
 	public static void main(String[] args)
@@ -152,6 +154,7 @@ public class Game {
 		this.createObject(w);
 		this.createObject(p1);
 		this.createObject(p2);
+		this.createObject(new ItemMaster());
 		Game.log("Init complete");
 	}
 	
@@ -202,6 +205,11 @@ public class Game {
 	public static Logger getLogger()
 	{
 		return Game.l;
+	}
+	
+	public int getState()
+	{
+		return state;
 	}
 	
 	public Menu getMenu()
@@ -400,7 +408,6 @@ public class Game {
 			}
 			if (e.getKeyCode() == KeyEvent.VK_C) {
 				hit(p1);
-				this.createObject(new HealItem(new Rectangle(300,300,50,50)));
 			} else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 				hit(p2);
 			}

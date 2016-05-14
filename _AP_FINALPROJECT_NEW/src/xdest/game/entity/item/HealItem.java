@@ -13,7 +13,7 @@ public class HealItem extends Item {
 	
 	public HealItem(Rectangle r) {
 		super("Heal", new Location(r.getX(), r.getY()), ImageLoader.loadImage("/images/items/heal.png"), r);
-		heal = (int)(Math.random() * 100);
+		heal = (int)(Math.random() * 100) + 1;
 		setName(getName() + " - " + heal);
 	}
 	

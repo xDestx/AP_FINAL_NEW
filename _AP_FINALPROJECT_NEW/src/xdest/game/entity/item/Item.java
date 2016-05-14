@@ -1,5 +1,7 @@
 package xdest.game.entity.item;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -37,8 +39,17 @@ public abstract class Item extends Entity {
 	public void render(Graphics g) {
 		Rectangle r = getBounds();
 		super.render(g);
+		g.setFont(new Font("Arial",Font.BOLD,18));
+		g.setColor(Color.yellow);
 		g.drawRect((int) r.getX(), (int) r.getY(), (int) r.getWidth(), (int) r.getHeight());
 		g.drawString(getName(), (int) r.getX(), (int) r.getY() - 20);
+	}
+	
+	public static Item create(String name, Location l)
+	{
+		if (name.equalsIgnoreCase("heal"))
+			return new HealItem(new Rectangle((int)l.getX(), (int)l.getY(), 50, 50));
+		return null;
 	}
 
 }
