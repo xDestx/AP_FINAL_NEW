@@ -40,7 +40,7 @@ public class HealthDrain extends Effect {
 	
 	protected String toStr()
 	{
-		return "Heatlh drain for " + this.dmg + " int (seconds)" + (this.interval * 100) + " dur(seconds)" + (this.getDuration() * 100);
+		return "Heatlh drain for " + this.dmg + " int (seconds)" + (this.interval * 100) + " dur(seconds)" + (this.getDuration());
 	}
 
 

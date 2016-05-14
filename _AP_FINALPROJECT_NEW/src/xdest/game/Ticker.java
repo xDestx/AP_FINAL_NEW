@@ -93,5 +93,11 @@ public class Ticker {
 	{
 		o.add(g);
 	}
+	
+	public void removeObject(GameObject g)
+	{
+		if(o.contains(g))
+			o.remove(g);
+	}
 
 }

@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import xdest.game.effect.HealthDrain;
 import xdest.game.entity.Entity;
+import xdest.game.entity.item.HealItem;
 import xdest.game.entity.player.Player;
 import xdest.game.location.Location;
 import xdest.game.location.Velocity;
@@ -200,6 +201,11 @@ public class Game {
 		return this.m;
 	}
 	
+	public void removeObject(GameObject o)
+	{
+		t.removeObject(o);
+	}
+	
 	private void gameTick()
 	{
 		if (state == 0)
@@ -386,6 +392,7 @@ public class Game {
 			}
 			if (e.getKeyCode() == KeyEvent.VK_C) {
 				hit(p1);
+				this.createObject(new HealItem(new Rectangle(300,300,50,50)));
 			} else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 				hit(p2);
 			}
