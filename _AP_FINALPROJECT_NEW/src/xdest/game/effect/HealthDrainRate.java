@@ -28,5 +28,9 @@ public class HealthDrainRate extends Effect {
 		return expired();
 	}
 
-
+	@Override
+	protected String toStr()
+	{
+		return "Heatlh drain RATE for " + this.dmg + " dur (seconds)" + (this.getDuration() * 100);
+	}
 }

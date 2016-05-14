@@ -45,5 +45,13 @@ public abstract class Effect {
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return toStr();
+	}
+	
+	protected abstract String toStr();
 
 }
