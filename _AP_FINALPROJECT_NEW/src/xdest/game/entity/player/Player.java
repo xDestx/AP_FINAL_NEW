@@ -14,6 +14,7 @@ import java.util.Stack;
 
 import xdest.game.Game;
 import xdest.game.effect.Effect;
+import xdest.game.effect.HealthDrain;
 import xdest.game.entity.Entity;
 import xdest.game.location.Location;
 import xdest.game.location.Velocity;
@@ -169,6 +170,7 @@ public class Player extends Entity implements Collidable {
 	 */
 	public void addEffect(Effect e) {
 		effects.add(e);
+		Game.log("Effect added to " + getName() + " - " + e.toString());
 	}
 
 	/**
@@ -277,7 +279,11 @@ public class Player extends Entity implements Collidable {
 	public void effectHeal(double h) {
 		this.hp += h;
 		Game.log(getName() + " healed " + h);
-		// System.out.println("Wowie! Healed for " + h + "hp! total: " + hp);
+		if(getHealth() > getStats().getMaxHp())
+		{
+			Game.log(getName() + " overhealed for " + (getHealth() - getStats().getMaxHp() + "!"));
+			addEffect(new HealthDrain(this, 10*100, (int)(getHealth() - getStats().getMaxHp()), 50));
+		}
 	}
 
 	private void addAn(Animation a) {
