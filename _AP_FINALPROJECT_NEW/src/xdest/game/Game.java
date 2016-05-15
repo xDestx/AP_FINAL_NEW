@@ -174,7 +174,7 @@ public class Game {
 
 			f++;
 			if (s >= 1000000000) {
-				if ((k != 100 && k != 101) || (f < 200)) {
+				if ((k != 100 && k != 101) || (f < 150)) {
 					Game.log("Ticks: " + k + " | Fps: " + f);
 					t.log();
 				}
