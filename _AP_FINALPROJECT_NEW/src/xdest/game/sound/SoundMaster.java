@@ -1,8 +1,10 @@
 package xdest.game.sound;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,10 +54,12 @@ public class SoundMaster {
 			String x = sound[i];
 			try {
 				Game.log("Trying to load " + x + " ...");
-				AudioInputStream audioInputStream = AudioSystem
-						.getAudioInputStream(SoundMaster.class.getResourceAsStream(x));
+				
+				InputStream audioSrc = SoundMaster.class.getResourceAsStream(x);
+				InputStream bufferedIn = new BufferedInputStream(audioSrc);
+				AudioInputStream audioStream = AudioSystem.getAudioInputStream(bufferedIn);
 				Clip c = AudioSystem.getClip();
-				c.open(audioInputStream);
+				c.open(audioStream);
 				sounds.put(x.substring(7), c);
 				Game.log("Loaded " + x);
 				currentLoaded++;
