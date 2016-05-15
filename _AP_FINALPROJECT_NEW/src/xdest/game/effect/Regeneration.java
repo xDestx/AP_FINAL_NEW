@@ -1,8 +1,6 @@
 package xdest.game.effect;
 
 
-import java.awt.Color;
-
 import xdest.game.entity.player.Player;
 
 public class Regeneration extends Effect {

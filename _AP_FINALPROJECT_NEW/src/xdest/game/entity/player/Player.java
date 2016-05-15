@@ -1,11 +1,11 @@
 package xdest.game.entity.player;
 
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -20,7 +20,6 @@ import xdest.game.location.Location;
 import xdest.game.location.Velocity;
 import xdest.game.sound.SoundMaster;
 import xdest.game.ui.DamageNumber;
-import xdest.game.ui.Screen;
 import xdest.game.util.ImageLoader;
 import xdest.game.vis.Animation;
 import xdest.game.vis.HitAnimation;
@@ -465,6 +464,7 @@ public class Player extends Entity implements Collidable {
 		g2.draw(getHitBounds());
 	}
 
+	@SuppressWarnings("unused")
 	private void drawHitBoxes(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.draw(getBoundsTop());

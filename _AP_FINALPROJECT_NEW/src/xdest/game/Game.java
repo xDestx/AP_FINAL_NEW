@@ -1,15 +1,13 @@
 package xdest.game;
 
 import java.awt.Color;
+
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
-import xdest.game.effect.HealthDrain;
 import xdest.game.entity.Entity;
-import xdest.game.entity.item.HealItem;
 import xdest.game.entity.item.ItemMaster;
 import xdest.game.entity.player.Player;
 import xdest.game.location.Location;
