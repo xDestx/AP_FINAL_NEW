@@ -24,6 +24,9 @@ import xdest.game.util.ImageLoader;
 import xdest.game.util.KeyController;
 import xdest.game.util.Logger;
 import xdest.game.util.MouseWatcher;
+import xdest.game.vis.Animation;
+import xdest.game.vis.BlackToWhite;
+import xdest.game.vis.EndAnimation;
 import xdest.game.world.World;
 import xdest.game.world.WorldHandler;
 
@@ -37,85 +40,57 @@ public class Game {
 	private Screen screen;
 	private int state;
 	private JFrame f;
-	private Player p1,p2;
+	private Player p1, p2;
 	private String p1n, p2n;
 	private static Logger l;
 	public static int GRAVITY = 9;
 	public static int MENU = 1, FINISHED = 3, FIGHT = 0;
-	//0 = Menu, 1 = Game
-	
-	public static void main(String[] args)
-	{
-		l = new Logger("AP FINAL PROJECT GAME",5);
+	// 0 = Menu, 1 = Game
+
+	public static void main(String[] args) {
+		l = new Logger("AP FINAL PROJECT GAME", 5);
 		Game.log("Starting...");
 		SoundMaster.init();
 		Game.log("Game fix branch test! :)");
 		g = new Game();
 		g.play();
-		
+
 	}
-	
-	public static void log(String message)
-	{
+
+	public static void log(String message) {
 		l.log(message);
 	}
-	
-	public static Game getCurrentGame()
-	{
+
+	public static Game getCurrentGame() {
 		return g;
 	}
-	
-	public void setState(int state)
-	{
-		if (state == 0)
-		{
+
+	public void setState(int state) {
+		if (state == 0) {
 			init();
 		}
-		if (state == 1)
-		{
+		if (state == 1) {
 			SoundMaster.playSound("main_screen.wav");
 		}
 		this.state = state;
 	}
-	
-	public Game()
-	{
+
+	public Game() {
 		w = WorldHandler.getWorld("Level1");
 		UIButton[] buttons = new UIButton[3];
 		buttons[0] = new UIButton("PLAY",
-				new Rectangle(
-						Screen.WIDTH / 4,
-						Screen.HEIGHT / 8,
-						Screen.WIDTH / 2,
-						Screen.HEIGHT / 8),
-				Color.RED, ImageLoader.loadImage("/images/dbutton.png"),
-				GameAction.START);
+				new Rectangle(Screen.WIDTH / 4, Screen.HEIGHT / 8, Screen.WIDTH / 2, Screen.HEIGHT / 8), Color.RED,
+				ImageLoader.loadImage("/images/dbutton.png"), GameAction.START);
 		buttons[1] = new UIButton("HELP",
-				new Rectangle(
-						Screen.WIDTH / 4,
-						3 * Screen.HEIGHT / 8,
-						Screen.WIDTH / 2,
-						Screen.HEIGHT / 8),
-				Color.BLUE, ImageLoader.loadImage("/images/dbutton.png"),
-				GameAction.HELP);
+				new Rectangle(Screen.WIDTH / 4, 3 * Screen.HEIGHT / 8, Screen.WIDTH / 2, Screen.HEIGHT / 8), Color.BLUE,
+				ImageLoader.loadImage("/images/dbutton.png"), GameAction.HELP);
 		buttons[2] = new UIButton("QUIT",
-				new Rectangle(
-						Screen.WIDTH / 4,
-						5 * Screen.HEIGHT / 8,
-						Screen.WIDTH / 2,
-						Screen.HEIGHT / 8),
-				Color.DARK_GRAY, ImageLoader.loadImage("/images/dbutton.png"),
-				GameAction.QUIT);
+				new Rectangle(Screen.WIDTH / 4, 5 * Screen.HEIGHT / 8, Screen.WIDTH / 2, Screen.HEIGHT / 8),
+				Color.DARK_GRAY, ImageLoader.loadImage("/images/dbutton.png"), GameAction.QUIT);
 		Game.log("UI Buttons built!");
 		m = new Menu("Super Japan Fighting Adventure XVII", buttons, ImageLoader.loadImage("/images/menubg.png"));
-		m.addFloatingButton(new UIButton(" ",
-				new Rectangle(
-						(Screen.WIDTH / 2) - 25,
-						Screen.HEIGHT - 125,
-						50,
-						50),
-				Color.cyan, ImageLoader.loadImage("/images/muteButton.png"),
-				GameAction.MUTE));
+		m.addFloatingButton(new UIButton(" ", new Rectangle((Screen.WIDTH / 2) - 25, Screen.HEIGHT - 125, 50, 50),
+				Color.cyan, ImageLoader.loadImage("/images/muteButton.png"), GameAction.MUTE));
 		screen = new Screen(this);
 		screen.addKeyListener(new KeyController(this));
 		t = new Ticker();
@@ -136,9 +111,8 @@ public class Game {
 		state = 1;
 		Game.log("Menu and other utilities built!");
 	}
-	
-	private void init()
-	{
+
+	private void init() {
 		Game.log("Initializing!");
 		screen.requestFocus();
 		t = new Ticker();
@@ -146,21 +120,38 @@ public class Game {
 		p1.setLocation(10, 60);
 		p1.getStats().addBonusDamage(5);
 		p2 = new Player(p2n, "/images/defaultplayer2.png");
-		p2.setLocation(400,60);
+		p2.setLocation(400, 60);
 		p2.getStats().addBonusDamage(2);
 		p2.getStats().addPResist(4);
-		//p1.addEffect(new HealthDrain(p1, 10000, 100,100));
-		//p2.addEffect(new HealthDrain(p2, 10000, 100,100));
+		// p1.addEffect(new HealthDrain(p1, 10000, 100,100));
+		// p2.addEffect(new HealthDrain(p2, 10000, 100,100));
 		this.createObject(w);
 		this.createObject(p1);
 		this.createObject(p2);
 		this.createObject(new ItemMaster());
 		Game.log("Init complete");
 	}
-	
-	public void play()
-	{
+
+	public void silentSetState(int s) {
+		this.state = s;
+	}
+
+	public void play() {
 		init();
+		this.createAnimation(new BlackToWhite(4));
+		this.setState(2);
+		Thread tr = new Thread() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(4100);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				Game.getCurrentGame().silentSetState(1);
+			}
+		};
+		tr.start();
 		playing = true;
 		long last = System.nanoTime();
 		double ns = 1000000000 / TICK;
@@ -168,26 +159,22 @@ public class Game {
 		int k = 0;
 		int f = 0;
 		long s = 0;
-		while(playing)
-		{
+		while (playing) {
 			long n = System.nanoTime();
 			d += (n - last) / ns;
-			s+= (n - last);
+			s += (n - last);
 			last = n;
-			if (d >= 1)
-			{
+			if (d >= 1) {
 				gameTick();
 				k++;
 				d--;
 			}
-			
+
 			renderScreen();
-			
+
 			f++;
-			if (s >= 1000000000)
-			{
-				if ((k != 100 && k != 101) || (f < 200))
-				{
+			if (s >= 1000000000) {
+				if ((k != 100 && k != 101) || (f < 200)) {
 					Game.log("Ticks: " + k + " | Fps: " + f);
 					t.log();
 				}
@@ -195,159 +182,155 @@ public class Game {
 				s = 0;
 				k = 0;
 			}
-			
+
 		}
 		Game.log("Quitting...");
 		Game.getLogger().save();
 		System.exit(0);
 	}
-	
-	public static Logger getLogger()
-	{
+
+	public static Logger getLogger() {
 		return Game.l;
 	}
-	
-	public int getState()
-	{
+
+	public int getState() {
 		return state;
 	}
-	
-	public Menu getMenu()
-	{
+
+	public Menu getMenu() {
 		return this.m;
 	}
-	
-	public void removeObject(GameObject o)
-	{
+
+	public void removeObject(GameObject o) {
 		t.removeObject(o);
 	}
-	
-	private void gameTick()
-	{
-		if (state == 0)
-		{
+
+	public void createAnimation(Animation a) {
+		t.addOverAnimation(a);
+	}
+
+	private void gameTick() {
+		if (state == 0) {
 			t.tick(this);
-			if(!SoundMaster.isPlaying("fight_music.wav"))
+			if (!SoundMaster.isPlaying("fight_music.wav"))
 				SoundMaster.playSound("fight_music.wav");
-			if (p1.isDead())
-			{
-				Game.log("Player 2 (" + p2.getName() + ") won. p2 health: " + p2.getHealth() + " p1  health: " + p1.getHealth());
-				this.createObject(new Text("The winner is " + p2.getName() + "!", new Location(0, Screen.HEIGHT / 2), new Color(255,0,0)));
+			if (p1.isDead()) {
+				Game.log("Player 2 (" + p2.getName() + ") won. p2 health: " + p2.getHealth() + " p1  health: "
+						+ p1.getHealth());
+				this.createObject(new Text("The winner is " + p2.getName() + "!", new Location(0, Screen.HEIGHT / 2),
+						new Color(255, 0, 0)));
 				p1.setVisible(false);
-				p1.setVelocity(new Velocity(0,0));
+				p1.setVelocity(new Velocity(0, 0));
 				p1.clearEffects();
 				p2.clearEffects();
-				p2.setVelocity(new Velocity(0,0));
-				p2.setLocation(new Location(((Screen.WIDTH - Player.WIDTH) / 2), ((Screen.HEIGHT - Player.HEIGHT) / 2)));
+				p2.setVelocity(new Velocity(0, 0));
+				p2.setLocation(
+						new Location(((Screen.WIDTH - Player.WIDTH) / 2), ((Screen.HEIGHT - Player.HEIGHT) / 2)));
 				state = 3;
 				SoundMaster.stopSound("fight_music.wav");
+				SoundMaster.playSound("click_sound.wav");
 				Game.log("Switching state to 3");
-				Thread t = new Thread()
-				{
+				this.createAnimation(new EndAnimation());
+				Thread t = new Thread() {
 					@Override
-					public void run()
-					{
-						try
-						{
+					public void run() {
+						try {
 							Thread.sleep(5000);
-						} catch (Exception e)
-						{
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
+						SoundMaster.playSound("click_sound.wav");
 						Game.log("Switching state to 1");
 						Game.getCurrentGame().setState(1);
 					}
 				};
 				t.start();
-			} else if (p2.isDead())
-			{
-				Game.log("Player 1 (" + p1.getName() + ") won. p2 health: " + p2.getHealth() + " p1  health: " + p1.getHealth());
+			} else if (p2.isDead()) {
+				Game.log("Player 1 (" + p1.getName() + ") won. p2 health: " + p2.getHealth() + " p1  health: "
+						+ p1.getHealth());
 				p2.setVisible(false);
-				this.createObject(new Text("The winner is " + p1.getName() + "!", new Location(0, Screen.HEIGHT / 2), new Color(255,0,0)));
-				p1.setVelocity(new Velocity(0,0));
+				this.createObject(new Text("The winner is " + p1.getName() + "!", new Location(0, Screen.HEIGHT / 2),
+						new Color(255, 0, 0)));
+				p1.setVelocity(new Velocity(0, 0));
 				p1.clearEffects();
 				p2.clearEffects();
-				p2.setVelocity(new Velocity(0,0));
-				p1.setLocation(new Location(((Screen.WIDTH - Player.WIDTH) / 2), ((Screen.HEIGHT - Player.HEIGHT) / 2)));
+				p2.setVelocity(new Velocity(0, 0));
+				p1.setLocation(
+						new Location(((Screen.WIDTH - Player.WIDTH) / 2), ((Screen.HEIGHT - Player.HEIGHT) / 2)));
 				state = 3;
 				SoundMaster.stopSound("fight_music.wav");
 				Game.log("Switching state to 3");
-				Thread t = new Thread()
-				{
+				SoundMaster.playSound("click_sound.wav");
+				this.createAnimation(new EndAnimation());
+				Thread t = new Thread() {
 					@Override
-					public void run()
-					{
-						try
-						{
+					public void run() {
+						try {
 							Thread.sleep(5000);
-						} catch (Exception e)
-						{
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
 
+						SoundMaster.playSound("click_sound.wav");
 						Game.log("Switching state to 1");
 						Game.getCurrentGame().setState(1);
 					}
 				};
 				t.start();
 			}
-		} else if (state == 1)
-		{
-			if(!SoundMaster.isPlaying("main_screen.wav"))
+		} else if (state == 1) {
+			if (!SoundMaster.isPlaying("main_screen.wav"))
 				SoundMaster.playSound("main_screen.wav");
-		} else if (state == 3)
-		{
+		} else if (state == 3) {
 			t.tick(this);
-			if (p1.isDead())
-			{
+			if (p1.isDead()) {
 				Location x = new Location(((Screen.WIDTH - Player.WIDTH) / 2), ((Screen.HEIGHT - Player.HEIGHT) / 2));
 				p2.setLocation(x);
 				p2.setVelocity(0, 0);
-				p1.setVelocity(0,0);
+				p1.setVelocity(0, 0);
 				p1.setCanJump(false);
 				p2.setCanJump(false);
 				p1.setLocation(x);
-			} else if (p2.isDead())
-			{
+			} else if (p2.isDead()) {
 				Location x = new Location(((Screen.WIDTH - Player.WIDTH) / 2), ((Screen.HEIGHT - Player.HEIGHT) / 2));
 				p1.setLocation(x);
 				p2.setVelocity(0, 0);
-				p1.setVelocity(0,0);
+				p1.setVelocity(0, 0);
 				p1.setCanJump(false);
 				p2.setCanJump(false);
 				p2.setLocation(x);
 			}
-		} 
+		} else if (state == 2) {
+			t.tickAnimations(this);
+		}
 	}
-	
+
 	/**
 	 * Create a game object
-	 * @param g - the game object
+	 * 
+	 * @param g
+	 *            - the game object
 	 */
-	public void createObject(GameObject g)
-	{
+	public void createObject(GameObject g) {
 		t.addObject(g);
 	}
-	
-	private void renderScreen()
-	{
-		if (state == 0)
-		{
+
+	private void renderScreen() {
+		if (state == 0) {
 			screen.render(t.getRenderables());
-		} else if (state == 1)
-		{
+		} else if (state == 1) {
 			screen.render(m);
-		} else if (state == 3)
-		{
+		} else if (state == 2) {
+			screen.render(t.getAnimationsAsRenderable());
+		} else if (state == 3) {
 			screen.render(t.getRenderables());
 		}
 	}
-	
+
 	/**
 	 * Quit the game
 	 */
-	public void quit()
-	{
+	public void quit() {
 		playing = false;
 	}
 
@@ -411,8 +394,7 @@ public class Game {
 			} else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 				hit(p2);
 			}
-			if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
-			{
+			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 				Game.log(p1.getVelocity().toString() + " p1");
 				Game.log(p2.getVelocity().toString() + " p2");
 				Game.log(p1.getRh() + "RH p1");
@@ -420,7 +402,7 @@ public class Game {
 				Game.log(p2.getRh() + "RH p2");
 				Game.log(p2.getLh() + "LH p2");
 				Game.getLogger().save();
-			//	SoundMaster.close();
+				// SoundMaster.close();
 				Game.getCurrentGame().quit();
 				System.exit(0);
 			}
@@ -480,63 +462,48 @@ public class Game {
 		}
 
 	}
-	
-	
-	public void setName(int p, String name)
-	{
-		if (p == 1)
-		{
-			if (p1 == null)
-			{
+
+	public void setName(int p, String name) {
+		if (p == 1) {
+			if (p1 == null) {
 				p1n = name;
-			} else
-			{
+			} else {
 				p1.setName(name);
 				p1n = name;
 			}
-		} else if (p == 2)
-		{
-			if (p2 == null)
-			{
+		} else if (p == 2) {
+			if (p2 == null) {
 				p2n = name;
-			} else
-			{
+			} else {
 				p2.setName(name);
 				p2n = name;
 			}
 		}
-		
+
 	}
-	
-	public Player getPlayer1()
-	{
+
+	public Player getPlayer1() {
 		return p1;
 	}
-	
-	public Player getPlayer2()
-	{
+
+	public Player getPlayer2() {
 		return p2;
 	}
-	
-	public static int getHealthPosition(Player p)
-	{
-		if (p.equals(Game.getCurrentGame().getPlayer1()))
-		{
+
+	public static int getHealthPosition(Player p) {
+		if (p.equals(Game.getCurrentGame().getPlayer1())) {
 			return 10;
-		} else
-		{
+		} else {
 			return 310;
 		}
 	}
-	
-	public World getWorld()
-	{
+
+	public World getWorld() {
 		return this.w;
 	}
-	
-	public Rectangle getBounds()
-	{
+
+	public Rectangle getBounds() {
 		return screen.getBounds();
 	}
-	
+
 }

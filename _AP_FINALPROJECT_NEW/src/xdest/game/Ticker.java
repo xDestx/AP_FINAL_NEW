@@ -1,22 +1,26 @@
 package xdest.game;
 
 import java.awt.Graphics;
+
 import java.util.Collection;
 import java.util.LinkedList;
 
 import xdest.game.GameObject;
 import xdest.game.entity.Entity;
 import xdest.game.util.Renderable;
+import xdest.game.vis.Animation;
 
 public class Ticker {
 
 	private LinkedList<GameObject> o;
+	private LinkedList<Animation> a;
 	
 	/**
 	 * Handles updating all game objects
 	 */
 	public Ticker() {
 		o = new LinkedList<GameObject>();
+		a = new LinkedList<Animation>();
 	}
 	
 	/**
@@ -27,6 +31,10 @@ public class Ticker {
 		for (int i = 0; i < o.size(); i++)
 		{
 			o.get(i).update(g);
+		}
+		for (int i = 0; i < a.size(); i++)
+		{
+			a.get(i).update(g);
 		}
 	}
 	
@@ -47,6 +55,14 @@ public class Ticker {
 				}
 			}
 		}
+		for (int i = 0; i < a.size(); i++)
+		{
+			a.get(i).render(g);
+			if (a.get(i).expired())
+			{
+				a.remove(i);
+			}
+		}
 	}
 	
 	public Collection<Renderable> getRenderables()
@@ -58,6 +74,41 @@ public class Ticker {
 			{
 				x.add((Renderable) o.get(i));
 			}
+		}
+		
+		for (int i = 0; i < a.size(); i++)
+		{
+			if (a.get(i) instanceof Renderable)
+			{
+				x.add((Renderable) a.get(i));
+			}
+		}
+		return x;
+	}
+	
+	public Collection<Animation> getAnimations()
+	{
+		return a;
+	}
+	
+	public void tickAnimations(Game g)
+	{
+		for (int i = 0; i < a.size(); i++)
+		{
+			a.get(i).update(g);
+			if(a.get(i).expired())
+			{
+				a.remove(i);
+			}
+		}
+	}
+	
+	public Collection<Renderable> getAnimationsAsRenderable()
+	{
+		LinkedList<Renderable> x = new LinkedList<Renderable>();
+		for (Animation an : a)
+		{
+			x.add((Renderable)an);
 		}
 		return x;
 	}
@@ -92,6 +143,11 @@ public class Ticker {
 	public void addObject(GameObject g)
 	{
 		o.add(g);
+	}
+	
+	public void addOverAnimation(Animation an)
+	{
+		this.a.add(an);
 	}
 	
 	public void removeObject(GameObject g)
