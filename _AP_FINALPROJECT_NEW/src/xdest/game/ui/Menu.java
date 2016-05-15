@@ -17,7 +17,7 @@ public class Menu extends MouseAdapter implements Renderable {
 	private String name;
 	private UIButton[] buttons;
 	private BufferedImage bg;
-	private int x;
+	private double x;
 
 	public Menu(String name, UIButton[] buttons, BufferedImage i) {
 		this.name = name;
@@ -31,6 +31,11 @@ public class Menu extends MouseAdapter implements Renderable {
 		drawTitle(g);
 		drawWave(g);
 		drawOptions(g);
+	}
+	
+	public void tick()
+	{
+		x+=1.35;
 	}
 
 	private void drawWave(Graphics g) {
@@ -59,7 +64,6 @@ public class Menu extends MouseAdapter implements Renderable {
 					g.setColor(Color.red);
 					g.fillRect(startX + (int) (Math.sin(Math.toRadians(x + i*2)) * 5), startY + (rangeY - i), 1, 1);
 				}
-				x++;
 				return;
 			}
 		}
@@ -76,8 +80,8 @@ public class Menu extends MouseAdapter implements Renderable {
 		}
 		
 		g.setColor(last);
-		x++;
 	}
+	
 
 	public void addFloatingButton(UIButton b) {
 		UIButton[] addedButton = new UIButton[buttons.length + 1];

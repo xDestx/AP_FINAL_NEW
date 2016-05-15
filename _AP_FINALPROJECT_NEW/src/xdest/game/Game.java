@@ -281,6 +281,7 @@ public class Game {
 		} else if (state == 1) {
 			if (!SoundMaster.isPlaying("main_screen.wav"))
 				SoundMaster.playSound("main_screen.wav");
+			m.tick();
 		} else if (state == 3) {
 			t.tick(this);
 			if (p1.isDead()) {
