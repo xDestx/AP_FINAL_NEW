@@ -1,5 +1,6 @@
 package xdest.game.entity.item;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 
 import xdest.game.Game;
@@ -29,6 +30,12 @@ public class HealItem extends Item {
 		{
 			this.picked(g.getPlayer2());
 		}
+	}
+	
+
+	protected Color setBoxColor()
+	{
+		return Color.RED;
 	}
 
 	@Override

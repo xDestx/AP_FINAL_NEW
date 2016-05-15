@@ -40,10 +40,12 @@ public abstract class Item extends Entity {
 		Rectangle r = getBounds();
 		super.render(g);
 		g.setFont(new Font("Arial",Font.BOLD,18));
-		g.setColor(Color.yellow);
+		g.setColor(setBoxColor());
 		g.drawRect((int) r.getX(), (int) r.getY(), (int) r.getWidth(), (int) r.getHeight());
 		g.drawString(getName(), (int) r.getX(), (int) r.getY() - 20);
 	}
+	
+	protected abstract Color setBoxColor();
 	
 	public static Item create(String name, Location l)
 	{

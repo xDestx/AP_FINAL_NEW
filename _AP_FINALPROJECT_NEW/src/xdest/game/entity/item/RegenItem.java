@@ -1,5 +1,6 @@
 package xdest.game.entity.item;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 
 import xdest.game.Game;
@@ -32,6 +33,12 @@ public class RegenItem extends Item {
 		}
 	}
 
+
+	protected Color setBoxColor()
+	{
+		return Color.cyan;
+	}
+	
 	@Override
 	protected void grabbed(Player p) {
 		Game.log("Regen grabbed! (" + totalHealed + ")");
