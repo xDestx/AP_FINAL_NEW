@@ -359,22 +359,6 @@ public class Player extends Entity implements Collidable {
 		}
 	}
 
-	/*
-	 * if (x1.getX() > this.getBounds().getX() + this.getBounds().getWidth()) {
-	 * if (x1.getX() < this.getBounds().getX()) { double off = x1.getX() -
-	 * this.getBounds().getX() + this.getBounds().getWidth();
-	 * System.out.println(off); getLocation().addX(off); v.setX(0); } } if
-	 * (x1.getX() < this.getBounds().getX()) { double off = x1.getX() +
-	 * this.getBounds().getX(); System.out.println(off);
-	 * getLocation().addX(off); v.setX(0); } if (x1.getY() >
-	 * this.getBounds().getY() + this.getBounds().getHeight()) { double off =
-	 * x1.getY() - this.getBounds().getY() + this.getBounds().getHeight();
-	 * System.out.println(off); getLocation().addY(off); v.setY(0); } if
-	 * (x1.getY() < this.getBounds().getY()) { double off = x1.getY() +
-	 * this.getBounds().getY(); System.out.println(off);
-	 * getLocation().addY(off); v.setY(0); }
-	 */
-
 	private void onSurface(World w) {
 		isFalling = true;
 		for (WorldObject co : w.getAll()) {

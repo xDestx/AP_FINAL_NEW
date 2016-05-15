@@ -217,7 +217,7 @@ public class Game {
 			if (p1.isDead()) {
 				Game.log("Player 2 (" + p2.getName() + ") won. p2 health: " + p2.getHealth() + " p1  health: "
 						+ p1.getHealth());
-				this.createObject(new Text("The winner is " + p2.getName() + "!", new Location(0, Screen.HEIGHT / 2),
+				this.createObject(new Text(p2.getName() + " has beaten " + p1.getName() + "!", new Location(0, Screen.HEIGHT / 2),
 						new Color(255, 0, 0)));
 				p1.setVisible(false);
 				p1.setVelocity(new Velocity(0, 0));
@@ -249,7 +249,7 @@ public class Game {
 				Game.log("Player 1 (" + p1.getName() + ") won. p2 health: " + p2.getHealth() + " p1  health: "
 						+ p1.getHealth());
 				p2.setVisible(false);
-				this.createObject(new Text("The winner is " + p1.getName() + "!", new Location(0, Screen.HEIGHT / 2),
+				this.createObject(new Text(p1.getName() + " has beaten " + p2.getName() + "!", new Location(0, Screen.HEIGHT / 2),
 						new Color(255, 0, 0)));
 				p1.setVelocity(new Velocity(0, 0));
 				p1.clearEffects();
