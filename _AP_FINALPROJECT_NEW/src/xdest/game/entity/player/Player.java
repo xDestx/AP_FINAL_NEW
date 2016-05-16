@@ -15,6 +15,7 @@ import java.util.Stack;
 import xdest.game.Game;
 import xdest.game.effect.Effect;
 import xdest.game.effect.HealthDrain;
+import xdest.game.effect.OverhealDrain;
 import xdest.game.entity.Entity;
 import xdest.game.location.Location;
 import xdest.game.location.Velocity;
@@ -77,6 +78,8 @@ public class Player extends Entity implements Collidable {
 		rH = false;
 		hurtTick = 0;
 		v.addY(Game.GRAVITY);
+
+		addEffect(new OverhealDrain(this,1));
 	}
 
 	public Player(String name, String path) {
@@ -99,6 +102,7 @@ public class Player extends Entity implements Collidable {
 		hurtTick = 0;
 		rH = false;
 		v.addY(Game.GRAVITY);
+		addEffect(new OverhealDrain(this,1));
 	}
 
 	public boolean isVisible() {
@@ -179,6 +183,8 @@ public class Player extends Entity implements Collidable {
 	 *            - the effect
 	 */
 	public void removeEffect(Effect e) {
+		if(e instanceof OverhealDrain)
+			return;
 		effects.remove(e);
 	}
 
@@ -189,7 +195,10 @@ public class Player extends Entity implements Collidable {
 	 *            - the index
 	 */
 	public void removeEffect(int i) {
+		if (((Stack<Effect>)effects).get(i) instanceof OverhealDrain)
+			return;
 		effects.remove(i);
+		
 	}
 
 	public void clearEffects()
@@ -200,6 +209,7 @@ public class Player extends Entity implements Collidable {
 		}
 		effects.clear();
 		Game.log("Cleared effects for " + getName());
+		addEffect(new OverhealDrain(this,-1));
 	}
 	
 	/**
@@ -231,6 +241,14 @@ public class Player extends Entity implements Collidable {
 	 */
 	public double getHealth() {
 		return this.hp;
+	}
+	
+	public void pureDamage(double d)
+	{
+		this.hp -= d;
+		addDn(new DamageNumber(d, (int) getLocation().getX() + 40 + (int) (Math.random() * 100),
+				(int) getLocation().getY() - 40 - (int) (Math.random() * 30)));
+		Game.log(getName() + " pure damage for " + d);
 	}
 
 	/**
@@ -281,7 +299,6 @@ public class Player extends Entity implements Collidable {
 		if(getHealth() > getStats().getMaxHp())
 		{
 			Game.log(getName() + " overhealed for " + (getHealth() - getStats().getMaxHp() + "!"));
-			addEffect(new HealthDrain(this, 10*100, (int)(getHealth() - getStats().getMaxHp()), 50));
 		}
 	}
 
@@ -498,7 +515,7 @@ public class Player extends Entity implements Collidable {
 		// g.drawRect((int)getLocation().getX(), (int)getLocation().getY() - 14,
 		// (int) (100 + 2), 12);
 		if (hurtTick <= 0)
-			g.setColor(Color.GREEN);
+			g.setColor(new Color(71,145,47));
 		else {
 			g.setColor(Color.RED);
 			hurtTick--;

@@ -363,24 +363,24 @@ public class Game {
 					p1.setCanJump(false);
 				}
 			}
-			if (e.getKeyCode() == KeyEvent.VK_L) {
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				if (!p2.getRh()) {
 					p2.getVelocity().addX(5);
 					p2.setRh(true);
 					p2.setFacing(Player.FACE_RIGHT);
 				}
-			} else if (e.getKeyCode() == KeyEvent.VK_J) {
+			} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				if (!p2.getLh()) {
 					p2.getVelocity().addX(-5);
 					p2.setLh(true);
 					p2.setFacing(Player.FACE_LEFT);
 				}
 				// System.out.println(p2.getVelocity().toString());
-			} else if (e.getKeyCode() == KeyEvent.VK_K) {
+			} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 				if ((Math.abs(p2.getVelocity().getX()) < 5))
 					p2.getVelocity().addY(5);
 				p2.setFacing(Player.FACE_DOWN);
-			} else if (e.getKeyCode() == KeyEvent.VK_I) {
+			} else if (e.getKeyCode() == KeyEvent.VK_UP) {
 				p2.setFacing(Player.FACE_UP);
 				if (p2.canJump()) {
 					p2.getVelocity().addY(-12);
@@ -388,9 +388,9 @@ public class Game {
 					p2.setCanJump(false);
 				}
 			}
-			if (e.getKeyCode() == KeyEvent.VK_C) {
+			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 				hit(p1);
-			} else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			} else if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
 				hit(p2);
 			}
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -440,23 +440,23 @@ public class Game {
 		} else if (e.getKeyCode() == KeyEvent.VK_W) {
 
 		}
-		if (e.getKeyCode() == KeyEvent.VK_L) {
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			if ((Math.abs(p2.getVelocity().getX()) <= 5) && p2.getRh())
 				if (p2.getLh())
 					p2.getVelocity().setX(-5);
 				else
 					p2.getVelocity().setX(0);
 			p2.setRh(false);
-		} else if (e.getKeyCode() == KeyEvent.VK_J && p2.getLh()) {
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT && p2.getLh()) {
 			if ((Math.abs(p2.getVelocity().getX()) <= 5))
 				if (p2.getRh())
 					p2.getVelocity().setX(5);
 				else
 					p2.getVelocity().setX(0);
 			p2.setLh(false);
-		} else if (e.getKeyCode() == KeyEvent.VK_K) {
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			p2.getVelocity().addY(-5);
-		} else if (e.getKeyCode() == KeyEvent.VK_I) {
+		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
 
 		}
 

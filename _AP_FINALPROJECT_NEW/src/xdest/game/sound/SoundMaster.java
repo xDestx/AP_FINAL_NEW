@@ -60,7 +60,7 @@ public class SoundMaster {
 				Game.log("Loaded " + x);
 				currentLoaded++;
 				jpb.setValue(currentLoaded);
-				jpb.setString(""+((double)currentLoaded/(double)sound.length));
+				jpb.setString(""+(int)(((double)currentLoaded/(double)sound.length) * 100)+"%");
 			} catch (UnsupportedAudioFileException er) {
 				er.printStackTrace();
 			} catch (IOException er) {
