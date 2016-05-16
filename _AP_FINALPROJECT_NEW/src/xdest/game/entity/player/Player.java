@@ -515,7 +515,7 @@ public class Player extends Entity implements Collidable {
 		// g.drawRect((int)getLocation().getX(), (int)getLocation().getY() - 14,
 		// (int) (100 + 2), 12);
 		if (hurtTick <= 0)
-			g.setColor(new Color(71,145,47));
+			g.setColor(Color.green);
 		else {
 			g.setColor(Color.RED);
 			hurtTick--;
