@@ -19,7 +19,9 @@ import xdest.game.ui.Screen;
 import xdest.game.ui.Text;
 import xdest.game.ui.UIButton;
 import xdest.game.util.ImageLoader;
+import xdest.game.util.KeyConfig;
 import xdest.game.util.KeyController;
+import xdest.game.util.Loader;
 import xdest.game.util.Logger;
 import xdest.game.util.MouseWatcher;
 import xdest.game.vis.Animation;
@@ -40,6 +42,7 @@ public class Game {
 	private JFrame f;
 	private Player p1, p2;
 	private String p1n, p2n;
+	private KeyConfig keyConfig;
 	private static Logger l;
 	public static int GRAVITY = 9;
 	public static int MENU = 1, FINISHED = 3, FIGHT = 0;
@@ -107,6 +110,7 @@ public class Game {
 		p1n = "P1";
 		p2n = "P2";
 		state = 1;
+		keyConfig = Loader.loadKeyConfig();
 		Game.log("Menu and other utilities built!");
 	}
 
@@ -335,7 +339,7 @@ public class Game {
 
 	public void keyPressed(KeyEvent e) {
 		if (state == 0) {
-			if (e.getKeyCode() == KeyEvent.VK_D) {
+			if (e.getKeyCode() == keyConfig.getP1Right()) {
 
 				// if((Math.abs(p1.getVelocity().getX()) < 5))
 				if (!p1.getRh()) {
@@ -343,19 +347,19 @@ public class Game {
 					p1.getVelocity().addX(5);
 					p1.setFacing(Player.FACE_RIGHT);
 				}
-			} else if (e.getKeyCode() == KeyEvent.VK_A) {
+			} else if (e.getKeyCode() == keyConfig.getP1Left()) {
 
 				if (!p1.getLh()) {
 					p1.getVelocity().addX(-5);
 					p1.setFacing(Player.FACE_LEFT);
 					p1.setLh(true);
 				}
-			} else if (e.getKeyCode() == KeyEvent.VK_S) {
+			} else if (e.getKeyCode() == keyConfig.getP1Down()) {
 
 				// if((Math.abs(p1.getVelocity().getX()) < 5))
 				p1.getVelocity().addY(5);
 				p1.setFacing(Player.FACE_DOWN);
-			} else if (e.getKeyCode() == KeyEvent.VK_W) {
+			} else if (e.getKeyCode() == keyConfig.getP1Up()) {
 				p1.setFacing(Player.FACE_UP);
 				if (p1.canJump()) {
 					p1.getVelocity().addY(-12);
@@ -363,24 +367,24 @@ public class Game {
 					p1.setCanJump(false);
 				}
 			}
-			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			if (e.getKeyCode() == keyConfig.getP2Right()) {
 				if (!p2.getRh()) {
 					p2.getVelocity().addX(5);
 					p2.setRh(true);
 					p2.setFacing(Player.FACE_RIGHT);
 				}
-			} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			} else if (e.getKeyCode() == keyConfig.getP2Left()) {
 				if (!p2.getLh()) {
 					p2.getVelocity().addX(-5);
 					p2.setLh(true);
 					p2.setFacing(Player.FACE_LEFT);
 				}
 				// System.out.println(p2.getVelocity().toString());
-			} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			} else if (e.getKeyCode() == keyConfig.getP2Down()) {
 				if ((Math.abs(p2.getVelocity().getX()) < 5))
 					p2.getVelocity().addY(5);
 				p2.setFacing(Player.FACE_DOWN);
-			} else if (e.getKeyCode() == KeyEvent.VK_UP) {
+			} else if (e.getKeyCode() == keyConfig.getP2Up()) {
 				p2.setFacing(Player.FACE_UP);
 				if (p2.canJump()) {
 					p2.getVelocity().addY(-12);
@@ -388,9 +392,9 @@ public class Game {
 					p2.setCanJump(false);
 				}
 			}
-			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			if (e.getKeyCode() == keyConfig.getP1Hit()) {
 				hit(p1);
-			} else if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+			} else if (e.getKeyCode() == keyConfig.getP2Hit()) {
 				hit(p2);
 			}
 			if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -421,42 +425,42 @@ public class Game {
 	}
 
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_D) {
+		if (e.getKeyCode() == keyConfig.getP1Right()) {
 			if ((Math.abs(p1.getVelocity().getX()) <= 5) && p1.getRh())
 				if (p1.getLh())
 					p1.getVelocity().setX(-5);
 				else
 					p1.getVelocity().setX(0);
 			p1.setRh(false);
-		} else if (e.getKeyCode() == KeyEvent.VK_A && p1.getLh()) {
+		} else if (e.getKeyCode() == keyConfig.getP1Left() && p1.getLh()) {
 			if ((Math.abs(p1.getVelocity().getX()) <= 5))
 				if (p1.getRh())
 					p1.getVelocity().setX(5);
 				else
 					p1.getVelocity().setX(0);
 			p1.setLh(false);
-		} else if (e.getKeyCode() == KeyEvent.VK_S) {
+		} else if (e.getKeyCode() == keyConfig.getP1Down()) {
 			p1.getVelocity().addY(-5);
-		} else if (e.getKeyCode() == KeyEvent.VK_W) {
+		} else if (e.getKeyCode() == keyConfig.getP1Up()) {
 
 		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		if (e.getKeyCode() == keyConfig.getP2Right()) {
 			if ((Math.abs(p2.getVelocity().getX()) <= 5) && p2.getRh())
 				if (p2.getLh())
 					p2.getVelocity().setX(-5);
 				else
 					p2.getVelocity().setX(0);
 			p2.setRh(false);
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT && p2.getLh()) {
+		} else if (e.getKeyCode() == keyConfig.getP2Left() && p2.getLh()) {
 			if ((Math.abs(p2.getVelocity().getX()) <= 5))
 				if (p2.getRh())
 					p2.getVelocity().setX(5);
 				else
 					p2.getVelocity().setX(0);
 			p2.setLh(false);
-		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+		} else if (e.getKeyCode() == keyConfig.getP2Down()) {
 			p2.getVelocity().addY(-5);
-		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
+		} else if (e.getKeyCode() == keyConfig.getP2Up()) {
 
 		}
 
