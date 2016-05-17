@@ -1,4 +1,4 @@
-package xdest.game.util;
+package xdest.game.util.key;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import xdest.game.util.key.KeyConfig;
+
 public class Loader {
 
 	public static final String defaultPath = System.getProperty("user.home") + "/Desktop/SJFAXVII";

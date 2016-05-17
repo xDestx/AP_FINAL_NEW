@@ -19,11 +19,11 @@ import xdest.game.ui.Screen;
 import xdest.game.ui.Text;
 import xdest.game.ui.UIButton;
 import xdest.game.util.ImageLoader;
-import xdest.game.util.KeyConfig;
-import xdest.game.util.KeyController;
 import xdest.game.util.Loader;
 import xdest.game.util.Logger;
 import xdest.game.util.MouseWatcher;
+import xdest.game.util.key.KeyConfig;
+import xdest.game.util.key.KeyController;
 import xdest.game.vis.Animation;
 import xdest.game.vis.BlackToWhite;
 import xdest.game.vis.EndAnimation;
@@ -82,9 +82,9 @@ public class Game {
 		buttons[0] = new UIButton("PLAY",
 				new Rectangle(Screen.WIDTH / 4, Screen.HEIGHT / 8, Screen.WIDTH / 2, Screen.HEIGHT / 8), Color.RED,
 				ImageLoader.loadImage("/images/dbutton.png"), GameAction.START);
-		buttons[1] = new UIButton("HELP",
+		buttons[1] = new UIButton("KEYS",
 				new Rectangle(Screen.WIDTH / 4, 3 * Screen.HEIGHT / 8, Screen.WIDTH / 2, Screen.HEIGHT / 8), Color.BLUE,
-				ImageLoader.loadImage("/images/dbutton.png"), GameAction.HELP);
+				ImageLoader.loadImage("/images/dbutton.png"), GameAction.KEYC);
 		buttons[2] = new UIButton("QUIT",
 				new Rectangle(Screen.WIDTH / 4, 5 * Screen.HEIGHT / 8, Screen.WIDTH / 2, Screen.HEIGHT / 8),
 				Color.DARK_GRAY, ImageLoader.loadImage("/images/dbutton.png"), GameAction.QUIT);
@@ -501,6 +501,11 @@ public class Game {
 		}
 	}
 
+	public KeyConfig getKeyConfig()
+	{
+		return keyConfig;
+	}
+	
 	public World getWorld() {
 		return this.w;
 	}

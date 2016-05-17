@@ -1,4 +1,4 @@
-package xdest.game.util;
+package xdest.game.util.key;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import xdest.game.Game;
+import xdest.game.util.Loader;
 
 public class KeyConfig implements Serializable {
 
@@ -153,7 +154,7 @@ public class KeyConfig implements Serializable {
 			oos.writeObject(this);
 			oos.close();
 		} catch (IOException e) {
-			Game.log(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

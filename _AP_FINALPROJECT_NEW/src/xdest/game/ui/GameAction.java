@@ -2,15 +2,20 @@ package xdest.game.ui;
 
 import java.awt.Color;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import xdest.game.Game;
 import xdest.game.location.Location;
 import xdest.game.sound.SoundMaster;
+import xdest.game.util.key.KeySelectFrame;
 
 public enum GameAction {
 
-	QUIT,START,HELP,SELECT_LEVEL,MUTE;
+	QUIT,START,HELP,SELECT_LEVEL,MUTE,KEYC;
 
 	
 	public static void doAction(Game g,GameAction i)
@@ -44,5 +49,10 @@ public enum GameAction {
 		}
 		if (i == MUTE)
 			SoundMaster.mutePressed();
+		if(i == KEYC)
+		{
+			KeySelectFrame ksf = new KeySelectFrame(Game.getCurrentGame().getKeyConfig());
+			ksf.setVisible(true);
+		}
 	}
 }
