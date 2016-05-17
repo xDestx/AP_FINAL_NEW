@@ -29,13 +29,8 @@ public class Regeneration extends Effect {
 		{
 			double d = heal / (double)this.getDuration();
 			d = d * c;
-			if(p.getHealth() + d > p.getStats().getMaxHp())
-			{
-				p.setHealth(p.getStats().getMaxHp());
-			} else
-			{
-				p.effectHeal(d);
-			}
+			p.effectHeal(d);
+			
 			c=0;
 		}
 	//	p.effectDamage(dmg / (double)this.getDuration());
