@@ -123,6 +123,7 @@ public class KeySelectFrame extends JFrame {
 		this.add(p);
 		next.addKeyListener(new CKListener(this));
 		this.addWindowListener(new CWAdapter(this));
+		this.setSize(100, 100);
 	}
 	
 	public void setLabelText(String text)
