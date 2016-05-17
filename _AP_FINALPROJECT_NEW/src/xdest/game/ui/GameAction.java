@@ -15,15 +15,11 @@ import xdest.game.util.key.KeySelectFrame;
 
 public enum GameAction {
 
-	QUIT,START,HELP,SELECT_LEVEL,MUTE,KEYC;
+	QUIT,START,SELECT_LEVEL,MUTE,KEYC;
 
 	
 	public static void doAction(Game g,GameAction i)
 	{
-		if (i == HELP)
-		{
-			JOptionPane.showMessageDialog(null, "Player 1 Moves with ASDW, Player 2 moves with JKLI\nPlayer 1 uses C to attack, Player 2 uses SPACE to attack\nYou attack the direction you are facing (The red box).");
-		}
 		if (i == QUIT)
 		{
 			g.createObject(new Text("Quitting", new Location((int)Screen.WIDTH /2, (int)Screen.HEIGHT / 2), Color.CYAN));
