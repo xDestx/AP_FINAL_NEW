@@ -24,8 +24,36 @@ public class ItemMaster implements GameObject, Renderable {
 		counter = 0;
 		//Create all items
 		itemNames = new ArrayList<String>();
-		itemNames.add("heal");
+
 		itemNames.add("regen");
+		itemNames.add("heal");
+		for(String s : itemNames)
+		{
+			System.out.println(s);
+		}
+		boolean done = true;
+		//Sorts item names by name a->z
+		for(int i = 0; i < itemNames.size(); i++)
+		{
+			done = true;
+			for (int k = 0; k < itemNames.size()-1; k++)
+			{
+				if(itemNames.get(k).compareTo(itemNames.get(k+1)) > 0)
+				{
+					done = false;
+					String x = itemNames.get(k);
+					itemNames.set(k, itemNames.get(k+1));
+					itemNames.set(k+1, x);
+				}
+			}
+			if(done)
+				break;
+		}
+		
+		for(String s : itemNames)
+		{
+			System.out.println(s);
+		}
 	}
 
 	@Override
@@ -51,6 +79,7 @@ public class ItemMaster implements GameObject, Renderable {
 			}
 		}
 	}
+	
 
 	@Override
 	public void render(Graphics g) {
