@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 import xdest.game.Game;
 import xdest.game.entity.Entity;
@@ -50,10 +51,16 @@ public abstract class Item extends Entity {
 	public static Item create(String name, Location l)
 	{
 		Rectangle bound = new Rectangle((int)l.getX(), (int)l.getY(), 50, 50);
-		if (name.equalsIgnoreCase("heal"))
-			return new HealItem(bound);
-		if (name.equalsIgnoreCase("regen"))
-			return new RegenItem(bound);
+		HashMap<String,Item> toReturn = new HashMap<String,Item>();
+		toReturn.put("heal", new HealItem(bound));
+		toReturn.put("regen", new RegenItem(bound));
+		for(String s : toReturn.keySet())
+		{
+			if(s.equals(name))
+			{
+				return toReturn.get(s);
+			}
+		}
 		return null;
 	}
 
