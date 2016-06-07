@@ -19,6 +19,10 @@ public class HealthDrainRate extends Effect {
 		this.dmg = damage;
 	}
 	
+	/*
+	 * Damage / TICK means .01 of the damage per second every 1/100 of a second = damage / second
+	 */
+	
 	@Override
 	public boolean update()
 	{

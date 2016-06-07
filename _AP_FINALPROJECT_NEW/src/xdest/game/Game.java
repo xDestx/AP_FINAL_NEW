@@ -58,14 +58,17 @@ public class Game {
 
 	}
 
+	//Tells the logger to write a message
 	public static void log(String message) {
 		l.log(message);
 	}
 
+	//returns current game
 	public static Game getCurrentGame() {
 		return g;
 	}
 
+	//set game state
 	public void setState(int state) {
 		if (state == 0) {
 			init();
@@ -76,6 +79,7 @@ public class Game {
 		this.state = state;
 	}
 
+	//Game constructor
 	public Game() {
 		w = WorldHandler.getWorld("Level1");
 		UIButton[] buttons = new UIButton[3];
@@ -114,6 +118,8 @@ public class Game {
 		Game.log("Menu and other utilities built!");
 	}
 
+	
+	//to create or recreate the game
 	private void init() {
 		Game.log("Initializing!");
 		screen.requestFocus();
@@ -134,10 +140,12 @@ public class Game {
 		Game.log("Init complete");
 	}
 
+	//to ignore changing sounds
 	public void silentSetState(int s) {
 		this.state = s;
 	}
 
+	//Play the game (start)
 	public void play() {
 		init();
 		this.createAnimation(new BlackToWhite(4));
@@ -161,6 +169,7 @@ public class Game {
 		int k = 0;
 		int f = 0;
 		long s = 0;
+		//game loop
 		while (playing) {
 			long n = System.nanoTime();
 			d += (n - last) / ns;
@@ -203,14 +212,15 @@ public class Game {
 		return this.m;
 	}
 
+	//Remove game object by reference
 	public void removeObject(GameObject o) {
 		t.removeObject(o);
 	}
-
+	//Add animation by reference
 	public void createAnimation(Animation a) {
 		t.addOverAnimation(a);
 	}
-
+	//Update the universe (basically)
 	private void gameTick() {
 		if (state == 0) {
 			t.tick(this);
@@ -317,7 +327,7 @@ public class Game {
 	public void createObject(GameObject g) {
 		t.addObject(g);
 	}
-
+	//Renders the screen depending on the state of the game
 	private void renderScreen() {
 		if (state == 0) {
 			screen.render(t.getRenderables());
@@ -337,6 +347,7 @@ public class Game {
 		playing = false;
 	}
 
+	//Key Pressed (decide what to do depending on key)
 	public void keyPressed(KeyEvent e) {
 		if (state == 0) {
 			if (e.getKeyCode() == keyConfig.getP1Right()) {
@@ -413,6 +424,8 @@ public class Game {
 		}
 	}
 
+	
+	//Check hit bounds
 	private void hit(Player exempt) {
 		for (Entity e : t.getEntities()) {
 			if (e instanceof Player) {
@@ -424,6 +437,7 @@ public class Game {
 		}
 	}
 
+	//Decide what to do on key release
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == keyConfig.getP1Right()) {
 			if ((Math.abs(p1.getVelocity().getX()) <= 5) && p1.getRh())
@@ -465,7 +479,9 @@ public class Game {
 		}
 
 	}
-
+	
+	
+	//Set name of player (player 1 or 2)
 	public void setName(int p, String name) {
 		if (p == 1) {
 			if (p1 == null) {
@@ -485,6 +501,7 @@ public class Game {
 
 	}
 
+	//Get player 1 / 2
 	public Player getPlayer1() {
 		return p1;
 	}
@@ -493,6 +510,7 @@ public class Game {
 		return p2;
 	}
 
+	//Get default health bar offset for each player
 	public static int getHealthPosition(Player p) {
 		if (p.equals(Game.getCurrentGame().getPlayer1())) {
 			return 10;
@@ -500,16 +518,21 @@ public class Game {
 			return 310;
 		}
 	}
-
+	
+	
+	//Get the current Key Configuration
 	public KeyConfig getKeyConfig()
 	{
 		return keyConfig;
 	}
 	
+	//Get the current world
 	public World getWorld() {
 		return this.w;
 	}
 
+	
+	//Get the screen area
 	public Rectangle getBounds() {
 		return screen.getBounds();
 	}

@@ -21,6 +21,7 @@ public class Regeneration extends Effect {
 		this.c = 0;
 	}
 	
+	//Regenerates depending on heal vs duration
 	@Override
 	public boolean update()
 	{

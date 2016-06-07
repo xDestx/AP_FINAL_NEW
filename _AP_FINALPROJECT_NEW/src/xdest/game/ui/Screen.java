@@ -24,6 +24,7 @@ public class Screen extends Canvas {
 	private int m;
 	private Game g;
 	
+	//Game screen (everything drawn here)
 	public Screen(Game g) {
 		this.setSize(Screen.WIDTH,Screen.HEIGHT);
 		this.setMinimumSize(this.getSize());

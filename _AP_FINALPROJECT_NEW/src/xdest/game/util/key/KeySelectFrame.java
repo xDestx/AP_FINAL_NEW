@@ -22,7 +22,7 @@ public class KeySelectFrame extends JFrame {
 	private JLabel current;
 	private final KeyConfig cfg;
 	
-	
+	//Change key config
 	public KeySelectFrame(KeyConfig c) {
 		nextKey = false;
 		this.cfg = c;

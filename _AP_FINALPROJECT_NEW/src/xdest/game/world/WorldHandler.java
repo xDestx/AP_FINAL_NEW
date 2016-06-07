@@ -12,6 +12,8 @@ import xdest.game.util.ImageX;
 
 public class WorldHandler {
 
+	
+	//Create load and save worlds
 	public static void exportWorld(World w)
 	{
 		try

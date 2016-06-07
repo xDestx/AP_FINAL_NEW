@@ -9,6 +9,7 @@ public class OverhealDrain extends Effect {
 		super(p, duration);
 	}
 
+	//Default effect wich drains 2hp / s if over 100hp
 	@Override
 	public boolean update() {
 		if(p.getHealth() > p.getStats().getMaxHp())

@@ -9,6 +9,7 @@ public class CWAdapter extends WindowAdapter {
 
 	private KeySelectFrame ksf;
 	
+	//on window close save keys
 	public CWAdapter(KeySelectFrame ksf) {
 		this.ksf = ksf;
 	}

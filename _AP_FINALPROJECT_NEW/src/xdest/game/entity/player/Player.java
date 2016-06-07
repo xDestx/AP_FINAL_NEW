@@ -82,6 +82,7 @@ public class Player extends Entity implements Collidable {
 		addEffect(new OverhealDrain(this,1));
 	}
 
+	//Creates a a new player with specific image
 	public Player(String name, String path) {
 		super(name, new Location(), ImageLoader.loadImage(path), new Rectangle(0, 0, Player.WIDTH, Player.HEIGHT));
 		stats = new Stats();
@@ -124,14 +125,15 @@ public class Player extends Entity implements Collidable {
 			this.facing = f;
 	}
 
+	//Set right held
 	public void setRh(boolean s) {
 		this.rH = s;
 	}
-
+	//Get right held
 	public boolean getRh() {
 		return this.rH;
 	}
-
+	//Set / get left held
 	public void setLh(boolean Lh) {
 		this.lH = Lh;
 	}
@@ -140,10 +142,11 @@ public class Player extends Entity implements Collidable {
 		return this.lH;
 	}
 
+	//Get stats (object)
 	public Stats getStats() {
 		return this.stats;
 	}
-
+	
 	public boolean canJump() {
 		return canJump;
 	}

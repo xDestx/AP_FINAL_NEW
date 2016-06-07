@@ -48,6 +48,8 @@ public abstract class Item extends Entity {
 	
 	protected abstract Color setBoxColor();
 	
+	//Pre: Name of item and Location of item
+	//Post: The Item
 	public static Item create(String name, Location l)
 	{
 		Rectangle bound = new Rectangle((int)l.getX(), (int)l.getY(), 50, 50);

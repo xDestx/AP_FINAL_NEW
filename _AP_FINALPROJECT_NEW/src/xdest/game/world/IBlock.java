@@ -20,6 +20,7 @@ public class IBlock extends Block {
 		this.i = i;
 	}
 	
+	//Block
 	@Override
 	public void render(Graphics g)
 	{

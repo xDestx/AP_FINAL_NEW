@@ -12,6 +12,7 @@ public class ImageX implements Serializable {
 	private int w,h;
 	private int[] rgb;
 	
+	//Allows an image to be serialized
 	public ImageX(BufferedImage i) {
 		w = i.getWidth();
 		h = i.getHeight();

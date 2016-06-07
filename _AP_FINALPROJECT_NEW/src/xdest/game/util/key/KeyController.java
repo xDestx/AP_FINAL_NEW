@@ -9,6 +9,7 @@ public class KeyController extends KeyAdapter {
 
 	private Game g;
 	
+	//Key listener for game
 	public KeyController(Game g)
 	{
 		this.g = g;

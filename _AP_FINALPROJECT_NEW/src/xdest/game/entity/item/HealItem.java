@@ -12,6 +12,7 @@ public class HealItem extends Item {
 
 	private int heal;
 	
+	
 	public HealItem(Rectangle r) {
 		super("Heal", new Location(r.getX(), r.getY()), ImageLoader.loadImage("/images/items/heal.png"), r);
 		heal = (int)(Math.random() * 50) + 1;
@@ -32,12 +33,13 @@ public class HealItem extends Item {
 		}
 	}
 	
-
+	//Set box color
 	protected Color setBoxColor()
 	{
 		return Color.RED;
 	}
 
+	//On player grab
 	@Override
 	protected void grabbed(Player p) {
 		Game.log("Heal grabbed! (" + heal + ")");

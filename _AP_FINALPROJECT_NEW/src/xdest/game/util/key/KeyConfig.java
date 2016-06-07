@@ -15,6 +15,7 @@ public class KeyConfig implements Serializable {
 	/**
 	 * 
 	 */
+	//key configuration
 	private static final long serialVersionUID = -11940601235974528L;
 	private int leftKeyP1, rightKeyP1, upKeyP1, downKeyP1, hitKeyP1;
 	private int leftKeyP2, rightKeyP2, upKeyP2, downKeyP2, hitKeyP2;

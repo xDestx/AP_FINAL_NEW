@@ -14,6 +14,7 @@ public class World extends WorldObject {
 	/**
 	 * 
 	 */
+	//World for the game
 	private static final long serialVersionUID = 4005305835428372857L;
 	private LinkedList<WorldObject> objs;
 	//Need to add bounds for

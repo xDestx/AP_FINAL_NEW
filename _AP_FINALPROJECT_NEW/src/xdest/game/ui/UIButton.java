@@ -24,7 +24,7 @@ public class UIButton implements Renderable{
 	private int w,h;
 	private boolean hover;
 	
-	
+	//Uses Game Action to do things depending on click
 	public UIButton(String text, Rectangle r, Color c, GameAction i) {
 		this.text = text;
 		this.c = c;

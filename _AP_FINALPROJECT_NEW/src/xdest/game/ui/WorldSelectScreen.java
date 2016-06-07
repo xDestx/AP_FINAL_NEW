@@ -12,6 +12,7 @@ public class WorldSelectScreen extends JFrame {
 	public WorldSelectScreen() {
 		/*
 		 * This class will be to list worlds and select from one to play in! Will probably be called in GameAction after player names are asked for
+		 * Sike I didn't use it
 		 */
 	}
 

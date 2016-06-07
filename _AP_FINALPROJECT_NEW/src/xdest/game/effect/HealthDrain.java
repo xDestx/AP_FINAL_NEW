@@ -21,6 +21,8 @@ public class HealthDrain extends Effect {
 		this.c = 0;
 	}
 	
+	
+	//Damage the player ( damage / duration )
 	@Override
 	public boolean update()
 	{
@@ -32,8 +34,6 @@ public class HealthDrain extends Effect {
 			p.effectDamage(d);
 			c=0;
 		}
-	//	p.effectDamage(dmg / (double)this.getDuration());
-		//System.out.println(dmg / (double)this.getDuration() + " damage! current = " + current + " duration = " + getDuration());
 		current++;
 		return expired();
 	}

@@ -17,6 +17,7 @@ public class Logger {
 	/**
 	 * @param max Max logs before auto save
 	 */
+	//Logs stuff
 	public Logger(String title, int max) {
 		Calendar c = Calendar.getInstance();
 		fileName = (c.get(Calendar.MONTH)+1) + "." + c.get(Calendar.DAY_OF_MONTH) + "." + c.get(Calendar.YEAR) + "." + c.get(Calendar.HOUR_OF_DAY) + "." + c.get(Calendar.MINUTE) + "." + c.get(Calendar.SECOND);

@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 
 public class ImageLoader {
 
+	//Loads an image
 	public static BufferedImage loadImage(String path)
 	{
 		try

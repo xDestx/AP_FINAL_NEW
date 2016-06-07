@@ -58,6 +58,7 @@ public class Text implements GameObject, Renderable {
 		finTick = ti/3;
 	}
 
+	//Text animation
 	@Override
 	public void render(Graphics g) {
 		Color x = g.getColor();

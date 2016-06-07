@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 public class CKListener extends KeyAdapter {
 
+	//Key listener for key select frame
 	private KeySelectFrame ksf;
 	
 	public CKListener(KeySelectFrame ksf) {

@@ -38,6 +38,7 @@ public class Menu extends MouseAdapter implements Renderable {
 		x+=1.35;
 	}
 
+	//Draw the wave based on ticks passed
 	private void drawWave(Graphics g) {
 		Color last = g.getColor();
 		g.setColor(Color.cyan);
@@ -82,7 +83,7 @@ public class Menu extends MouseAdapter implements Renderable {
 		g.setColor(last);
 	}
 	
-
+	//Add a button anywhere
 	public void addFloatingButton(UIButton b) {
 		UIButton[] addedButton = new UIButton[buttons.length + 1];
 		for (int i = 0; i < buttons.length; i++) {

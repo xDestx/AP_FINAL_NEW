@@ -19,6 +19,7 @@ public class RegenItem extends Item {
 		setName(getName() + " - " + totalHealed);
 	}
 
+	//Heals
 	@Override
 	public void update(Game g)
 	{

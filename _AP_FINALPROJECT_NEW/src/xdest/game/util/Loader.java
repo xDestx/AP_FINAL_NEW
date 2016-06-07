@@ -11,6 +11,7 @@ public class Loader {
 
 	public static final String defaultPath = System.getProperty("user.home") + "/Desktop/SJFAXVII";
 
+	//Loads key config
 	public static KeyConfig loadKeyConfig() {
 		try {
 			ObjectInputStream ois = new ObjectInputStream(

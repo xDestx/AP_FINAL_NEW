@@ -10,17 +10,30 @@ public abstract class Effect {
 	protected final Player p;
 	protected int current;
 	
+	/**
+	 * 
+	 * @param p The player affected 
+	 * @param duration duration in ticks
+	 */
 	public Effect(Player p, int duration) {
 		this.p = p;
 		this.duration = duration;
 		this.current = 0;
 	}
 	
+	/**
+	 * 
+	 * @return the duration in ticks
+	 */
+	
 	public final int getDuration()
 	{
 		return this.duration;
 	}
 	
+	/*
+	 * Ends the effect
+	 */
 	public final void end()
 	{
 		this.current = this.duration;
@@ -52,6 +65,9 @@ public abstract class Effect {
 		return toStr();
 	}
 	
+	/*
+	 * Doing this requires each effect have its own toString method 
+	 */
 	protected abstract String toStr();
 
 }

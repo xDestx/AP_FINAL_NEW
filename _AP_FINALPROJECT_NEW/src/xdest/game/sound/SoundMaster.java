@@ -24,6 +24,7 @@ public class SoundMaster {
 	private static HashMap<String, Clip> sounds;
 	private static boolean muted = false;
 	
+	//Load all the sounds
 	public static void init() {
 		if (init)
 			return;

@@ -9,6 +9,7 @@ public class MouseWatcher extends MouseAdapter {
 
 	private Screen s;
 	
+	//Used to check for mouse click
 	public MouseWatcher(Screen s) {
 		this.s = s;
 	}

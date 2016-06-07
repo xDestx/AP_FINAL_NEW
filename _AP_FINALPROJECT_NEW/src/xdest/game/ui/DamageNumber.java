@@ -15,6 +15,7 @@ public class DamageNumber extends Entity {
 	private final int fSize;
 	private int toRemove;
 	
+	//Honestly I should have made this an animation
 	public DamageNumber(double d, int x, int y) {
 		super("Damage Numer: " + d, new Location(x,y),null, null);
 		toRemove = 300;

@@ -14,11 +14,12 @@ public class ItemMaster implements GameObject, Renderable {
 
 	private ArrayList<String> itemNames;
 	private int counter;
+	
 	public ItemMaster() {
 		//To be created with game
 		init();
 	}
-	
+	//Holds all item names
 	private void init()
 	{
 		counter = 0;

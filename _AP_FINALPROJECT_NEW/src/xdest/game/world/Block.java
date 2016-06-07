@@ -14,7 +14,7 @@ public class Block extends WorldObject implements Collidable {
 	 */
 	private static final long serialVersionUID = 9018214900662471479L;
 	private Rectangle bound;
-	
+	//Plain non image block
 	public Block() {
 		super(new Location(0,0));
 		bound = new Rectangle(0,0,0,0);

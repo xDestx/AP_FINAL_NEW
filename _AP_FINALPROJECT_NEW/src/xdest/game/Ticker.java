@@ -145,6 +145,7 @@ public class Ticker {
 		o.add(g);
 	}
 	
+	//Add an overlaying animation
 	public void addOverAnimation(Animation an)
 	{
 		this.a.add(an);

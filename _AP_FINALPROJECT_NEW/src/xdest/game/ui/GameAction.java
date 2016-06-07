@@ -17,7 +17,7 @@ public enum GameAction {
 
 	QUIT,START,SELECT_LEVEL,MUTE,KEYC;
 
-	
+	//Used for UI
 	public static void doAction(Game g,GameAction i)
 	{
 		if (i == QUIT)
