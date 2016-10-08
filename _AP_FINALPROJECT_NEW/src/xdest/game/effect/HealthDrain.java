@@ -1,6 +1,7 @@
 package xdest.game.effect;
 
 
+
 import xdest.game.entity.player.Player;
 
 public class HealthDrain extends Effect {
