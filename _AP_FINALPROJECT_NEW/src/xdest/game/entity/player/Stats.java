@@ -2,29 +2,35 @@ package xdest.game.entity.player;
 
 public class Stats {
 
-	private double maxhp,bonushp,eresist,presist,basedamage,bonusdamage;
+	private double maxhp,bonushp,eresist,presist,basedamage,bonusdamage,bonuspresist;
 	
 	
 	
 	public Stats() {
-		maxhp = 100;
-		basedamage = 5;
+		maxhp = 1000;
+		basedamage = 35;
 		bonusdamage = 0;
 		bonushp = 0;
 		eresist = 0;
-		presist = 0;
+		presist = 25;
+		bonuspresist=0;
 	}
 	
 	public Stats(double bhp, double pr, double er, double bd)
 	{
-		maxhp = 100;
-		basedamage = 5;
+		maxhp = 1000;
+		basedamage = 35;
 		this.bonusdamage = bd;
 		this.bonushp = bhp;
 		this.presist = pr;
+		bonuspresist=0;
 		this.eresist = er;
 	}
 	
+	public void setBonusPResist(double p)
+	{
+		this.bonuspresist = p;
+	}
 	
 	public void addBonusHp(double hp)
 	{
@@ -53,7 +59,7 @@ public class Stats {
 	
 	public double getPResist()
 	{
-		return this.presist;
+		return this.presist+bonuspresist;
 	}
 	
 	public double getMaxHp()

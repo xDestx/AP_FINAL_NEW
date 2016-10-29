@@ -32,9 +32,11 @@ public class Player extends Entity implements Collidable {
 
 	private double hp;
 	private int hurtTick;
+	private int hitStacks, stackTimer;
 	// hurt (for health bar)
 	private Stats stats;
 	private boolean lH, rH;
+	private double moveDisable,immunity;
 	private Velocity v;
 	private Collection<Effect> effects;
 	private Collection<DamageNumber> dns, toAddDns;
@@ -60,6 +62,9 @@ public class Player extends Entity implements Collidable {
 		super(name, new Location(), ImageLoader.loadImage("/images/defaultplayer.png"),
 				new Rectangle(0, 0, Player.WIDTH, Player.HEIGHT));
 		hb = ImageLoader.loadImage("/images/healthbar.png");
+		moveDisable = 0;
+		immunity = 0;
+		hitStacks = 0;
 		stats = new Stats();
 		effects = new Stack<Effect>();
 		dns = new Stack<DamageNumber>();
@@ -86,6 +91,9 @@ public class Player extends Entity implements Collidable {
 	public Player(String name, String path) {
 		super(name, new Location(), ImageLoader.loadImage(path), new Rectangle(0, 0, Player.WIDTH, Player.HEIGHT));
 		stats = new Stats();
+		hitStacks = 0;
+		moveDisable = 0;
+		immunity = 0;
 		hb = ImageLoader.loadImage("/images/healthbar.png");
 		effects = new Stack<Effect>();
 		dns = new Stack<DamageNumber>();
@@ -104,6 +112,26 @@ public class Player extends Entity implements Collidable {
 		rH = false;
 		v.addY(Game.GRAVITY);
 		addEffect(new OverhealDrain(this,1));
+	}
+	
+	public void setHitStacks(int h)
+	{
+		this.hitStacks = h;
+	}
+	
+	public void addHitStack()
+	{
+		hitStacks++;
+	}
+	
+	public int getHitStackTimer()
+	{
+		return this.stackTimer;
+	}
+	
+	public int getHitStacks()
+	{
+		return this.hitStacks;
 	}
 
 	public boolean isVisible() {
@@ -168,6 +196,11 @@ public class Player extends Entity implements Collidable {
 		v.setY(y);
 	}
 
+	public void setStackTimer(int ticks)
+	{
+		this.stackTimer = ticks;
+	}
+	
 	/**
 	 * Add a status effect
 	 * 
@@ -313,6 +346,26 @@ public class Player extends Entity implements Collidable {
 		toAddDns.add(d);
 	}
 
+	public void setMoveDisable(double d)
+	{
+		this.moveDisable = d;
+	}
+	
+	public double getMoveDisable()
+	{
+		return this.moveDisable;
+	}
+	
+	public void setImmunity(double d)
+	{
+		this.immunity = d;
+	}
+	
+	public double getImmunity()
+	{
+		return this.immunity;
+	}
+	
 	@Override
 	public void update(Game g) {
 		moveX((int) v.getX());
@@ -331,6 +384,15 @@ public class Player extends Entity implements Collidable {
 		}
 
 		onSurface(g.getWorld());
+		double timePass = 1.0/(double)Game.TICK;
+		immunity = (immunity < 0) ? immunity:immunity-timePass;
+		moveDisable = (moveDisable < 0) ? moveDisable:moveDisable-timePass;
+		stackTimer--;
+		if(stackTimer <= 0)
+		{
+			hitStacks = 0;
+		}
+		this.getStats().setBonusPResist(hitStacks * -5);
 		// if (co != null)
 		// {
 
@@ -510,6 +572,13 @@ public class Player extends Entity implements Collidable {
 
 	private void drawCharacter(Graphics g) {
 		g.drawImage(getImage(), (int) this.getLocation().getX() + xoff, (int) this.getLocation().getY() + yoff, null);
+		if(this.hitStacks > 0)
+		{
+			Color o = g.getColor();
+			g.setColor(Color.red);
+			g.drawOval((int) this.getLocation().getX() + xoff, (int) this.getLocation().getY() + yoff, (int)this.getBounds().getWidth(), (int)this.getBounds().getHeight());
+			g.setColor(o);
+		}
 	}
 	
 

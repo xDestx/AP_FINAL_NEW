@@ -126,11 +126,8 @@ public class Game {
 		t = new Ticker();
 		p1 = new Player(p1n);
 		p1.setLocation(10, 60);
-		p1.getStats().addBonusDamage(5);
 		p2 = new Player(p2n, "/images/defaultplayer2.png");
 		p2.setLocation(400, 60);
-		p2.getStats().addBonusDamage(2);
-		p2.getStats().addPResist(4);
 		// p1.addEffect(new HealthDrain(p1, 10000, 100,100));
 		// p2.addEffect(new HealthDrain(p2, 10000, 100,100));
 		this.createObject(w);
@@ -431,7 +428,18 @@ public class Game {
 			if (e instanceof Player) {
 				Player x = (Player) e;
 				if (x.colliding(exempt.getHitBounds())) {
-					x.damage(exempt.getStats().getDamage());
+					if(x.getImmunity() > 0)
+						return;
+					x.damage(exempt.getStats().getDamage() * ((exempt.getVelocity().getX() + exempt.getVelocity().getY() > 7) ? 2:1));
+					double xv = exempt.getVelocity().getX();
+					double yv = exempt.getVelocity().getY();
+					x.getVelocity().setX(xv/2.0);
+					x.getVelocity().setY(yv/2.0);
+					x.setMoveDisable(.2);
+					x.setImmunity(.40);
+					x.setStackTimer((int)TICK * 5);
+					x.addHitStack();
+					System.out.println("Stacks: " + x.getHitStacks() + " Timer: " + x.getHitStackTimer() + " PR:" + x.getStats().getPResist());
 				}
 			}
 		}
@@ -440,6 +448,8 @@ public class Game {
 	//Decide what to do on key release
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == keyConfig.getP1Right()) {
+			if(p1.getMoveDisable() > 0)
+				return;
 			if ((Math.abs(p1.getVelocity().getX()) <= 5) && p1.getRh())
 				if (p1.getLh())
 					p1.getVelocity().setX(-5);
@@ -447,6 +457,8 @@ public class Game {
 					p1.getVelocity().setX(0);
 			p1.setRh(false);
 		} else if (e.getKeyCode() == keyConfig.getP1Left() && p1.getLh()) {
+			if(p1.getMoveDisable() > 0)
+				return;
 			if ((Math.abs(p1.getVelocity().getX()) <= 5))
 				if (p1.getRh())
 					p1.getVelocity().setX(5);
@@ -454,11 +466,17 @@ public class Game {
 					p1.getVelocity().setX(0);
 			p1.setLh(false);
 		} else if (e.getKeyCode() == keyConfig.getP1Down()) {
+			if(p1.getMoveDisable() > 0)
+				return;
 			p1.getVelocity().addY(-5);
 		} else if (e.getKeyCode() == keyConfig.getP1Up()) {
+			if(p1.getMoveDisable() > 0)
+				return;
 
 		}
 		if (e.getKeyCode() == keyConfig.getP2Right()) {
+			if(p2.getMoveDisable() > 0)
+				return;
 			if ((Math.abs(p2.getVelocity().getX()) <= 5) && p2.getRh())
 				if (p2.getLh())
 					p2.getVelocity().setX(-5);
@@ -466,6 +484,8 @@ public class Game {
 					p2.getVelocity().setX(0);
 			p2.setRh(false);
 		} else if (e.getKeyCode() == keyConfig.getP2Left() && p2.getLh()) {
+			if(p2.getMoveDisable() > 0)
+				return;
 			if ((Math.abs(p2.getVelocity().getX()) <= 5))
 				if (p2.getRh())
 					p2.getVelocity().setX(5);
@@ -473,9 +493,12 @@ public class Game {
 					p2.getVelocity().setX(0);
 			p2.setLh(false);
 		} else if (e.getKeyCode() == keyConfig.getP2Down()) {
+			if(p2.getMoveDisable() > 0)
+				return;
 			p2.getVelocity().addY(-5);
 		} else if (e.getKeyCode() == keyConfig.getP2Up()) {
-
+			if(p2.getMoveDisable() > 0)
+				return;
 		}
 
 	}
