@@ -51,11 +51,11 @@ public class Logger {
 	public void save()
 	{
 		File f = new File(System.getProperty("user.home") + "/Desktop/SJFAXVII/logs/");
-		File f1 = new File(System.getProperty("user.home") + "/Desktop/");
+		//File f1 = new File(System.getProperty("user.home") + "/Desktop/");
 		if(!f.exists())
 			f.mkdirs();
-		if(!f1.exists())
-			f1.mkdirs();
+		//if(!f1.exists())
+		//	f1.mkdirs();
 		f = new File(f.getPath() + "/" + fileName + ".txt");
 		try {
 			PrintWriter fos = new PrintWriter(new FileOutputStream(f));
@@ -70,19 +70,19 @@ public class Logger {
 			e.printStackTrace();
 		}
 		
-		f1 = new File(f1.getPath() + "/" + fileName + ".txt");
-		try {
-			PrintWriter fos = new PrintWriter(new FileOutputStream(f1));
-			for (int i = 0; i < messages.size(); i++)
-			{
-				fos.write(messages.get(i));
-				fos.write("\n");
-			}
-			fos.close();
-		} catch (FileNotFoundException e) {
+		//f1 = new File(f1.getPath() + "/" + fileName + ".txt");
+		//try {
+			//PrintWriter fos = new PrintWriter(new FileOutputStream(f1));
+			//for (int i = 0; i < messages.size(); i++)
+			//{
+				//fos.write(messages.get(i));
+				//fos.write("\n");
+			//}
+			//fos.close();
+		//} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//	e.printStackTrace();
+		//}
 		
 	}
 
