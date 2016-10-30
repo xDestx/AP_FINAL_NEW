@@ -15,7 +15,7 @@ public class HealItem extends Item {
 	
 	public HealItem(Rectangle r) {
 		super("Heal", new Location(r.getX(), r.getY()), ImageLoader.loadImage("/images/items/heal.png"), r);
-		heal = (int)(Math.random() * 50) + 1;
+		heal = (int)(Math.random() * 250) + 1;
 		setName(getName() + " - " + heal);
 	}
 	

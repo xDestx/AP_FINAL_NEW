@@ -15,7 +15,7 @@ public class RegenItem extends Item {
 	
 	public RegenItem(Rectangle r) {
 		super("Regen", new Location(r.getX(), r.getY()), ImageLoader.loadImage("/images/items/heal.png"), r);
-		totalHealed = (int)(Math.random() * 100) + 1;
+		totalHealed = (int)(Math.random() * 500) + 1;
 		setName(getName() + " - " + totalHealed);
 	}
 
